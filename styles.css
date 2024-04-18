@@ -1,0 +1,64 @@
+.title {
+    color: green;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul li {
+    margin-right: 10px; /* Add spacing between list items */
+}
+
+nav ul li a {
+    display: block;
+    text-decoration: none;
+    padding: 10px 15px; /* Add padding around text */
+}
+
+.navbar {
+    background-color: #cccccc;
+    overflow: hidden;
+    width: 700px;
+    margin: auto;
+}
+
+/* Style the links inside the navigation bar */
+.navbar a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    background-color: aqua;
+}
+
+/* Style the links inside the navigation bar on hover */
+.navbar a:hover {
+    float: left;
+    color: blueviolet;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    background-color: azure;
+}
+
+/* Style of Team members */
+.team-members ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
