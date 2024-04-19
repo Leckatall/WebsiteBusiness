@@ -1,27 +1,121 @@
 body {
     background-color: rgba(64, 78, 237, 0.9);
-    background-image: url("images/HangingOutWithController.jpg");
-    background-repeat: no-repeat;
-    background-size: 40%;
+    margin: 0;
+    padding: 0;
 }
 
-.title {
+.heading{
+    background: none;
+    justify-self: center;
+    width: 50%;
+    height: 100px;
+    /*USE minmax(min max) to stop your elements from scaling infinitely */
+    margin: 0 auto;
+    justify-items: center;
+    align-items: center;
+
+}
+.heading .title {
     color: white;
     text-align: center;
     font-family: Verdana, Helvetica, serif;
 
 }
-.sub-title{
+
+.heading .sub-title{
     color: white;
     text-align: center;
     background-image: url("images/Stars.jpg");
-
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    justify-self: stretch;
 }
 
+/*.navigation{*/
+/*    background-image: url("images/HangingOutWithController.jpg");*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 40%;*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(3, 1fr);*/
+/*    justify-content: right;*/
+
+/*    width: 100%;*/
+
+/*}*/
+nav ul li:last-child {
+    margin-right: 0px;
+    margin-top: 0;
+}
 .button-container {
     display: flex;
     justify-content: space-between;
 }
+
+.pitch{
+    margin: 10px 0px;
+    background-color: #5e00ff;
+    width: 100%;
+    height: 300px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-rows: 30% 30% 40%;
+
+}
+
+.pitch img{
+    width: 100%;
+    height: 100%;
+    grid-area: image;
+}
+
+.pitch .title{
+    grid-area: title;
+}
+
+.pitch .sub-title{
+    grid-area: subtitle;
+}
+
+.pitch-LTR{
+    background-color: #5e00ff;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+            "image title"
+            "image subtitle"
+            "image blank";
+}
+
+.pitch-RTL{
+    background-color: #5e00ff;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+            "title image"
+            "subtitle image"
+            "blank image";
+}
+
+/*.pitch-LTR img{*/
+/*    align-self: end;*/
+/*    grid-column-start: 1;*/
+/*}*/
+
+/*.pitch-LTR .titles{*/
+/*    justify-self: right;*/
+/*    grid-column-start: 2;*/
+/*}*/
+
+/*.pitch-RTL img{*/
+/*    justify-self: right;*/
+/*    grid-column-start: 2;*/
+/*}*/
+
+/*.pitch-RTL .titles{*/
+/*    justify-self: left;*/
+/*    grid-column-start: 1;*/
+/*}*/
+
 
 .navbar ul {
     vertical-align: top;
@@ -31,26 +125,25 @@ body {
     text-align: center;
     justify-content: space-evenly;
     justify-items: stretch;
-
 }
 
 .navbar ul li {
     padding: 1px;
 }
 
-.heading{
-
-    background-size: contain;
-
-}
 .navbar {
     background-color: rgba(204, 204, 204, 0.5);
     overflow: hidden;
     width: max-content;
-    height: fit-content;
-    margin-left: 200px;
-    vertical-align: top;
-    object-position: right;
+    height: 75px;
+    margin-left: 0;
+    display:flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.navbar img{
+    height: 100%;
 }
 
 /* Style the links inside the navigation bar */
@@ -70,6 +163,7 @@ body {
 .navbar a:hover {
     color: blueviolet;
     background-color: azure;
+    border-radius: 20px;
 }
 
 /* Style of Team members */
