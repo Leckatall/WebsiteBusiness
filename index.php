@@ -6,9 +6,10 @@
     </head>
     <body>
     <section class="navigation">
-        <?php include 'partials/nav.php' ?>
+
     </section>
     <section class="heading">
+        <?php include 'partials/nav.php' ?>
         <h1 class="title center">Hathor Website Design</h1>
         <h3 class="sub-title center">Share Your Dream</h3>
         <hr width="100%" class="center">
