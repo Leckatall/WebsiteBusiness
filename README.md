@@ -1,3 +1,3 @@
 # WebsiteBusiness
 
-Website for a buusiness centered around selling website templates
+Website for a business centered around selling website templates
