@@ -43,7 +43,7 @@ body {
 
 /*}*/
 nav ul li:last-child {
-    margin-right: 0px;
+    margin-right: 20px;
     margin-top: 0;
 }
 .button-container {
@@ -68,7 +68,7 @@ nav ul li:last-child {
     to {opacity: 1;}
 }
 
-.pitch:hover{
+.pitch{
     animation: reveal 1s forwards;
 }
 
