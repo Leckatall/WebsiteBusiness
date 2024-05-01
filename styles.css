@@ -170,6 +170,14 @@ nav ul li:last-child {
     margin: 0;
 }
 
+/* .navbar unnecessary here as .active-page is always in .navbar but this is more clear */
+.navbar .active-page {
+    font-weight: bold;
+    color: ghostwhite;
+    background-color: blueviolet;
+    border-radius: 10px;
+}
+
 @keyframes spin {
     0% {transform: rotate(0deg);}
     100% {transform: rotate(90deg);}
@@ -183,8 +191,9 @@ nav ul li:last-child {
     background-color: azure;
     border-radius: 20px;
     background-size: contain;
-    transition: background-color 0.5s linear;
+    transition: background-color 0.5s linear, color 1s linear;
 }
+
 
 /* Style of Team members */
 .team-members ul {
