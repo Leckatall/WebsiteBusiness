@@ -2,10 +2,12 @@
 
 <?php require 'partials/nav.php' ?>
 
-    <section class="heading">
-        <h1 class="title center">Hathor Website Design</h1>
-        <h3 class="sub-title center">Share Your Dream</h3>
-        <hr width="100%" class="center">
+<?php require 'partials/login_widget.php'?>
+
+    <section class="heading container-fluid">
+        <h1 class="title text-center ">Hathor Website Design</h1>
+        <h3 class="sub-title text-center">Share Your Dream</h3>
+        <hr >
     </section>
 
     <section class="pitches">
