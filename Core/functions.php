@@ -16,9 +16,9 @@ function dd($value){
 function base_path($path){
     return BASE_PATH . $path;
 }
-function load_view($path, $attributes){
+function load_view($path, $attributes = []){
     extract($attributes);
-    require base_path($path);
+    require base_path('views/'. $path);
 }
 
 

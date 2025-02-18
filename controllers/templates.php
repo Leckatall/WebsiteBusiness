@@ -2,7 +2,7 @@
 
 $heading = "Templates";
 
-require base_path("views/templates.view.php");
+load_view('templates.view.php');
 
 
 

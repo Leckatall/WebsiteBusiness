@@ -1,13 +1,13 @@
 <?php
 
+use Core\App;
 use Core\Database;
 
-$heading = "Courses";
 
-$config = require base_path("config.php");
-$db = new Database($config['database']);
+$db = App::run(Database::class);
 
-$courses = $db->query("SELECT * FROM courses");
-//dd($courses);
+$courses = $db->query("SELECT * FROM courses")->fetchAll();
 
-require base_path("views/courses/index.view.php");
+load_view('courses/index.view.php',
+    ['heading' => 'Courses',
+    'courses' => $courses]);

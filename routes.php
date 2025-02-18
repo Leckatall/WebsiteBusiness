@@ -13,4 +13,5 @@ $router->addRoute('GET', '/login', 'controllers/login.php');
 
 $router->addRoute('GET', '/courses', 'controllers/courses/index.php');
 $router->addRoute('GET', '/course', 'controllers/courses/show.php');
+$router->addRoute('GET', '/courses/create', 'controllers/courses/create.php');
 
