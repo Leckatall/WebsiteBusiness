@@ -1,0 +1,5 @@
+# Redirects all requests to index.php where it can then be handled by router.php
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ /index.php [L,QSA]

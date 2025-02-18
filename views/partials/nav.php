@@ -1,5 +1,3 @@
-<?php include 'functions.php' ?>
-
 <?php
 function navbar_link($title, $page)
 {
@@ -17,9 +15,9 @@ function navbar_link($title, $page)
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item"><?= navbar_link("Home", "/") ?></li>
-                <li class="nav-item"><?= navbar_link("About", "/aboutUs.php") ?></li>
-                <li class="nav-item"><?= navbar_link("Templates", "/templates.php") ?></li>
-                <li class="nav-item"><?= navbar_link("Login", "/login.php") ?></li>
+                <li class="nav-item"><?= navbar_link("About", "/aboutUs") ?></li>
+                <li class="nav-item"><?= navbar_link("Templates", "/templates") ?></li>
+                <li class="nav-item"><?= navbar_link("Login", "/login") ?></li>
                 <li>
                     <button onclick="document.getElementById('login_widget').style.display='block'">LoginM8</button>
                 </li>
