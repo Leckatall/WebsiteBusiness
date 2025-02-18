@@ -1,6 +1,11 @@
 <?php
+
+namespace Core;
+
+use PDO;
+
 class Database {
-    public $connection;
+    public PDO $connection;
 
     public function __construct($config, $username='root', $password='') {
 
@@ -14,6 +19,7 @@ class Database {
         $statement->execute($params);
         return $statement;
     }
+
 }
 
 

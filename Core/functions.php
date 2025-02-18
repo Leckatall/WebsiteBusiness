@@ -12,3 +12,19 @@ function dd($value){
 
     die();
 }
+
+function base_path($path){
+    return BASE_PATH . $path;
+}
+function load_view($path, $attributes){
+    extract($attributes);
+    require base_path($path);
+}
+
+
+
+
+
+
+
+

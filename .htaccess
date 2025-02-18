@@ -1,4 +1,4 @@
-# Redirects all requests to index.php where it can then be handled by router.php
+# Redirects all requests to index.php where it can then be handled by Router.php
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
