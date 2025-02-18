@@ -11,18 +11,16 @@ spl_autoload_register(function ($class) {
     require base_path($class) . ".php";
 });
 
+
 require base_path("Core/Router.php");
 
 $router = new Router();
-$routes = require BASE_PATH . "routes.php";
+$routes = require base_path("routes.php");
 
 // setting the URI (the address bar contents after the domain) to a local variable
 $uri = parse_url($_SERVER["REQUEST_URI"])["path"];
-
+//dd($uri);
 $router->route($uri);
-
-$config = require "config.php";
-
 
 
 //// connect to SQL DB

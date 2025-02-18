@@ -3,7 +3,7 @@
 $heading = "About Us";
 
 
-require "views/aboutUs.view.php";
+require base_path("views/aboutUs.view.php");
 
 
 

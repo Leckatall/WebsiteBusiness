@@ -18,6 +18,7 @@ function navbar_link($title, $page)
                 <li class="nav-item"><?= navbar_link("About", "/aboutUs") ?></li>
                 <li class="nav-item"><?= navbar_link("Templates", "/templates") ?></li>
                 <li class="nav-item"><?= navbar_link("Login", "/login") ?></li>
+                <li class="nav-item"><?= navbar_link("Courses", "/courses") ?></li>
                 <li>
                     <button onclick="document.getElementById('login_widget').style.display='block'">LoginM8</button>
                 </li>

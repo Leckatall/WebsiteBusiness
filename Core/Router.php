@@ -12,7 +12,7 @@ class Router{
     public function route($uri){
         foreach($this->routes as $route){
             if($route['uri'] == $uri){
-                return require $route['controller'];
+                return require base_path($route['controller']);
             }
         }
     }

@@ -1,5 +1,16 @@
 # Redirects all requests to index.php where it can then be handled by Router.php
 RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^.*$ /index.php [L,QSA]
+
+# Redirect all requests to the public folder
+RewriteCond %{REQUEST_URI} !^/public/
+
+# Don't redirect from an existing file or directory
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect to /public/index.php
+RewriteRule ^(.*)$ /public/index.php [L,QSA]
+
+# Ensure direct access to static files in /public isn't changed
+#RewriteCond %{REQUEST_URI} ^/public/(.*)$
+#RewriteRule ^(.*)$ /public/$1 [L,QSA]
