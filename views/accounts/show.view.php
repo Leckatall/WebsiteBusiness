@@ -8,11 +8,11 @@
 
 <main>
     <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-        <h1>The Course Page for <?= htmlspecialchars($course["Name"]) ?></h1>
+        <h1>The Course Page for <?= htmlspecialchars($account["Email"]) ?></h1>
     </div>
     <form method="POST">
         <input type="hidden" name="_method" value="DELETE">
-        <input type="hidden" name="id" value="<?= $course['Id'] ?>">
+        <input type="hidden" name="id" value="<?= $account['Id'] ?>">
         <button class="text-sm text-red-500">DELETE COURSE</button>
     </form>
 </main>

@@ -12,17 +12,23 @@ spl_autoload_register(function ($class) {
 });
 
 
+
 require base_path("Core/Router.php");
 
 require base_path("Core/bootstrap.php");
 $router = new Router();
 $routes = require base_path("routes.php");
 
+// Starts a session
+session_start();
+$_SESSION['privilege_level'] = 0;
+
 // setting the URI (the address bar contents after the domain) to a local variable
 $uri = parse_url($_SERVER["REQUEST_URI"])["path"];
+// Using a post method with a _method arg allows for custom request methods
 $method = $_POST['_method'] ?? $_SERVER["REQUEST_METHOD"];
 
-$router->route($uri);
+$router->route($uri, $method);
 
 
 //// connect to SQL DB

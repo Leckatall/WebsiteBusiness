@@ -9,7 +9,7 @@ function navbar_link($title, $page)
 
 <header class="mb-auto">
     <div class="image-container">
-        <img class="float-md-start" src="/images/HangingOutWithController.jpg" alt="chilling">
+        <img class="float-md-start" alt="chilling" src=<?=get_image_src("HangingOutWithController.jpg")?>>
     </div>
     <nav class="navbar navbar-expand-sm">
         <div class="container-fluid">

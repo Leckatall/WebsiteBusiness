@@ -8,7 +8,7 @@
 
 <main>
 <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-    <form method="POST">
+    <form method="POST" action="/courses">
         <label for="courseTitle">Course Title</label>
         <div>
             <textarea id="courseTitle" name="name" required><?= $_POST['name'] ?? ''?></textarea>

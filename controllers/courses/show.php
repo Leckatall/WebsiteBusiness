@@ -6,7 +6,7 @@ use Core\Database;
 
 $db = App::run(Database::class);
 
-$course = $db->query('select * from Courses where id = :id', [
+$course = $db->query('SELECT * FROM Courses WHERE id = :id', [
     'id' => $_GET['id']
 ])->fetch();
 

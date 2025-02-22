@@ -1,5 +1,6 @@
 <?php
 function make_pitch($title, $subtitle, $orientation, $img_path, $img_alt){
+    $img_path = get_image_src($img_path);
     return "
     <section class='pitch pitch-$orientation'>
         <h2 class='titles title'>$title</h2>

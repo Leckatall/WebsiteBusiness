@@ -15,13 +15,13 @@
     <?= make_pitch("Sophisticated and Personable Designs",
         "Personalisation to satisfy the perfectionist business owner <b>and </b> the care-free blogger",
         "LTR",
-        "/images/HappyLaptopWoman.jpg",
+        "HappyLaptopWoman.jpg",
         "Businesswoman") ?>
 
     <?= make_pitch("Engage your Audience",
         "Be they clients, fans or potential employers!",
         "RTL",
-        "/images/InteractingWithTechnology.jpg",
+        "InteractingWithTechnology.jpg",
         "Technology Interaction") ?>
     </section>
 

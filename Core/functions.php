@@ -20,7 +20,13 @@ function load_view($path, $attributes = []){
     extract($attributes);
     require base_path('views/'. $path);
 }
-
+function get_image_src($path){
+    return "/src/images/{$path}";
+}
+function redirect($path){
+    header("Location: {$path}");
+    exit();
+}
 
 
 
