@@ -1,8 +1,3 @@
-<?php load_view('partials/header.php'); ?>
-
-<?php load_view('partials/nav.php'); ?>
-<?php load_view('partials/banner.php', ['heading' => $heading]); ?>
-
 
 <main>
     <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
@@ -41,7 +36,5 @@
         <a href="/register">No Account? Register here</a>
     </div>
 </main>
-
-<?php load_view('partials/footer.php'); ?>
 
 

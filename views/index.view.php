@@ -1,8 +1,5 @@
-<?php require 'partials/header.php' ?>
 
-<?php require 'partials/nav.php' ?>
-
-<?php require 'partials/login_widget.php'?>
+<?php //require 'partials/login_widget.php'?>
 
     <section class="heading container-fluid">
         <h1 class="title text-center ">Hathor Website Design</h1>
@@ -25,4 +22,3 @@
         "Technology Interaction") ?>
     </section>
 
-<?php require 'partials/footer.php' ?>

@@ -1,10 +1,6 @@
 <?php
 
-use Core\App;
 use Core\AccountManager;
-use Core\Database;
-use Core\Validator;
-
 
 $errors = AccountManager::register([
     "email" => $_POST['email'],

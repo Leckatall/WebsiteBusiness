@@ -1,11 +1,9 @@
 <?php
 
-
 use Core\AccountManager;
 
 
-// Logs the user in and adds ['user_id'] to the session
-// If the login attempt fails the reason is returned as a string
+// If the login at// Logs the user in and adds ['user_id'] to the sessiontempt fails the reason is returned as a string
 $login_error = AccountManager::login($_POST['email'], $_POST['password']);
 
 if ($login_error) {

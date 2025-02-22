@@ -1,12 +1,4 @@
 
-<?php require 'partials/header.php' ?>
-
-<?php require 'partials/nav.php' ?>
-
-<?php require 'partials/banner.php' ?>
-<?php require 'partials/pitch.php' ?>
-
-
 <section class="about-us">
     We are a collection of Uni Students commited to promptly developing
     and maintaining professional and X websites
@@ -81,4 +73,3 @@
         </ul>
     </div>
 </section>
-<?php require 'partials/footer.php' ?>

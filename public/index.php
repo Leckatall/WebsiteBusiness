@@ -32,4 +32,18 @@ $method = $_POST['_method'] ?? $_SERVER["REQUEST_METHOD"];
 
 $router->route($uri, $method);
 
+// TODO: Allow tutors to authorise student accounts
+// TODO: Tutors authorised by admin?
+// TODO: Students can access files in courses
+// TODO: Students can apply to enroll in a course and be approved by the tutor
+// TODO: Students can only view courses they are enrolled in
+// TODO: text files can be turned into quizzes
+// TODO: __init__ SQL Tables
+// TODO: Time restricted downloads for the students
+// TODO: Quizzes can have various question types
+// TODO: Students score is saved after they complete a quiz
+// TODO: Option to prevent retaking the quiz
+// TODO: Scores are viewable by the tutor
+// TODO: Student has a progress bar indicating their knowledge of the course
+// TODO: Use of AJAX
 
