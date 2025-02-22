@@ -1,6 +1,6 @@
 <?php
 
-use Core\AccountManager;
+use Core\Database\AccountManager;
 
 $errors = AccountManager::register([
     "email" => $_POST['email'],

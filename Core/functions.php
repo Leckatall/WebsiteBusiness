@@ -1,6 +1,5 @@
 <?php
 
-
 function isActivePage($page){
     return $page == $_SERVER['REQUEST_URI'];
 }
@@ -24,7 +23,7 @@ function load_view($path, $attributes = []){
     extract($attributes);
     load_partial('header.php');
     load_partial('nav.php');
-    load_partial('banner.php', ['heading' => $heading]);
+    load_partial('banner.php', ['heading' => $heading ?? ""]);
     require base_path('views/'. $path);
     load_partial('footer.php');
 }

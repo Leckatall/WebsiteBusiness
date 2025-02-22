@@ -1,7 +1,7 @@
 <?php
 
 use Core\App;
-use Core\Database;
+use Core\Database\Database;
 use Core\Validator;
 
 $db = App::run(Database::class);

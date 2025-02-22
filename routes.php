@@ -14,7 +14,6 @@ use Core\Middleware\TutorAccess;
 
 $router->addRoute('GET', '/', 'controllers/index.php');
 $router->addRoute('GET', '/aboutUs', 'controllers/aboutUs.php');
-$router->addRoute('GET', '/templates', 'controllers/templates.php');
 
 $router->addRoute('GET', '/courses', 'controllers/courses/index.php', (new StudentAccess));
 $router->addRoute('POST', '/courses', 'controllers/courses/store.php', (new TutorAccess));
@@ -32,6 +31,7 @@ $router->addRoute('GET', '/login', 'controllers/accounts/login.php');
 $router->addRoute('GET', '/logout', 'controllers/accounts/logout.php');
 $router->addRoute('POST', '/account', 'controllers/accounts/authorise.php');
 $router->addRoute('GET', '/account', 'controllers/accounts/show.php', (new AccountAccess));
+$router->addRoute('GET', '/portal', 'controllers/portals/route_to_portals.php', (new AccountAccess));
 
 $router->addRoute('GET', '/register', 'controllers/accounts/register.php');
 $router->addRoute('GET', '/accounts', 'controllers/accounts/index.php', (new AdminAccess));

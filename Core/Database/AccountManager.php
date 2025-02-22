@@ -1,7 +1,10 @@
 <?php
 
 
-namespace Core;
+namespace Core\Database;
+
+use Core\App;
+use Core\Validator;
 
 class AccountManager
 {

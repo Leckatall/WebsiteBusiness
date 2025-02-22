@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Database;
 
 use PDO;
 
@@ -24,6 +24,10 @@ class Database {
 
     public function getLastInsertId(){
         return $this->connection->lastInsertId();
+    }
+
+    public function init(){
+
     }
 
 }

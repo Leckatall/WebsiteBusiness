@@ -1,6 +1,6 @@
 <?php
 
-use Core\AccountManager;
+use Core\Database\AccountManager;
 
 AccountManager::logout();
 redirect("/");

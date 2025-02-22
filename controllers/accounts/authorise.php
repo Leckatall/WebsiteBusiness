@@ -1,6 +1,6 @@
 <?php
 
-use Core\AccountManager;
+use Core\Database\AccountManager;
 
 
 // If the login at// Logs the user in and adds ['user_id'] to the sessiontempt fails the reason is returned as a string

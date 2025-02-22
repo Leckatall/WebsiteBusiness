@@ -1,6 +1,7 @@
 <?php
+
 use Core\App;
-use Core\Database;
+use Core\Database\Database;
 
 
 $db = App::run(Database::class);

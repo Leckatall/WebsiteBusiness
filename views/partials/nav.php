@@ -9,19 +9,20 @@ function navbar_link($title, $page)
 
 <header class="mb-auto">
     <div class="image-container">
-        <img class="float-md-start" alt="chilling" src=<?=get_image_src("HangingOutWithController.jpg")?>>
+        <img class="float-md-start" alt="chilling" src=<?= get_image_src("HangingOutWithController.jpg") ?>>
     </div>
     <nav class="navbar navbar-expand-sm">
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item"><?= navbar_link("Home", "/") ?></li>
                 <li class="nav-item"><?= navbar_link("About", "/aboutUs") ?></li>
-                <li class="nav-item"><?= navbar_link("Templates", "/templates") ?></li>
-                <?php if($_SESSION['user_id'] ?? false) :?>
-                <li class="nav-item"><?= navbar_link("Account", "/account?id={$_SESSION['user_id']}") ?></li>
-                <?php else :?>
-                <li class="nav-item"><?= navbar_link("Login", "/login") ?></li>
-                <?php endif?>
+
+                <?php if ($_SESSION['user_id'] ?? false) : ?>
+                    <li class="nav-item"><?= navbar_link("Portal", "/portal") ?></li>
+                    <li class="nav-item"><?= navbar_link("Account", "/account?id={$_SESSION['user_id']}") ?></li>
+                <?php else : ?>
+                    <li class="nav-item"><?= navbar_link("Login", "/login") ?></li>
+                <?php endif ?>
                 <li class="nav-item"><?= navbar_link("Courses", "/courses") ?></li>
                 <li>
                     <button onclick="document.getElementById('login_widget').style.display='block'">LoginM8</button>
