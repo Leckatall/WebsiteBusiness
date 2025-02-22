@@ -1,13 +1,19 @@
 <?php
 
+use Core\App;
+use Core\Database;
+
 $db = App::run(Database::class);
 
 $account = $db->query('SELECT * FROM Accounts WHERE id = :id', [
-    'id' => $_SESSION['id']
+    'id' => $_GET['id']
 ])->fetch();
+const STATUSES = [
+    0 => 'Pending',
+    1 => 'Active'
+];
 
-if ($account['Status'] == 0){
-    redirect('/accounts/pending');
-}
-
-load_view("accounts/show.view.php");
+load_view("accounts/show.view.php", [
+    "heading" => "Your Account",
+    "account" => $account,
+    "status" => STATUSES[$account['Status']]]);

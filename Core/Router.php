@@ -2,6 +2,10 @@
 
 namespace Core;
 
+
+use Core\Middleware\Authoriser;
+use Core\Middleware\PublicAccess;
+
 class Router{
     protected array $routes = [];
 
@@ -12,7 +16,8 @@ class Router{
     public function route($uri, $method='GET'){
         foreach($this->routes as $route){
             if($route['uri'] == $uri && $route['method'] == $method){
-                if (!$route['middleware']()) {
+                // Middleware authorises whether the request will be allowed
+                if (!$route['middleware']->authorise()) {
                     return $this->abort(401);
                 }
                 return require base_path($route['controller']);

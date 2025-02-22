@@ -1,5 +1,0 @@
-<?php
-
-load_view();
-
-

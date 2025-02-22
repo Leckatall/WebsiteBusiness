@@ -6,6 +6,12 @@ const BASE_PATH = __DIR__ . '/../';
 
 require BASE_PATH . "Core/functions.php";
 
+// Starts a session
+session_start();
+if(!isset($_SESSION['privilege_level'])){
+    $_SESSION['privilege_level'] = 0;
+}
+
 spl_autoload_register(function ($class) {
     $class = str_replace("\\", DIRECTORY_SEPARATOR, $class);
     require base_path($class) . ".php";
@@ -18,10 +24,6 @@ require base_path("Core/Router.php");
 require base_path("Core/bootstrap.php");
 $router = new Router();
 $routes = require base_path("routes.php");
-
-// Starts a session
-session_start();
-$_SESSION['privilege_level'] = 0;
 
 // setting the URI (the address bar contents after the domain) to a local variable
 $uri = parse_url($_SERVER["REQUEST_URI"])["path"];

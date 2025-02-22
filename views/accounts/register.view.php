@@ -23,8 +23,8 @@
                 </div>
             </div>
             <div class="-space-y-px rounded-md shadow-sm">
-                <label for="privs">Select Account Type:</label>
-                <select name="privs" id="priv_lvl">
+                <label for="privilegeLevel">Select Account Type:</label>
+                <select name="privilegeLevel" id="privilegeLevel">
                     <option value=1>Student</option>
                     <option value=2>Tutor</option>
                     <option value=3>Admin</option>

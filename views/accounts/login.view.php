@@ -32,13 +32,10 @@
             </div>
 
             <ul>
-                <?php if (isset($errors['email'])) : ?>
-                    <li class="text-red-500 text-xs mt-2"><?= $errors['email'] ?></li>
+                <?php if ($error) : ?>
+                    <li class="text-red-500 text-xs mt-2"><?= $error ?></li>
                 <?php endif; ?>
 
-                <?php if (isset($errors['password'])) : ?>
-                    <li class="text-red-500 text-xs mt-2"><?= $errors['password'] ?></li>
-                <?php endif; ?>
             </ul>
         </form>
         <a href="/register">No Account? Register here</a>
