@@ -1,4 +1,4 @@
-<?php load_view('/views/partials/header.php') ?>
+<?php load_view('partials/header.php') ?>
 
 <?php load_view('partials/nav.php'); ?>
 <?php load_view('partials/banner.php', ['heading' => $heading]); ?>
@@ -22,4 +22,4 @@
 </main>
 
 
-<?php require base_path('/views/partials/footer.php') ?>
+<?php load_view('partials/footer.php') ?>

@@ -33,7 +33,3 @@ $method = $_POST['_method'] ?? $_SERVER["REQUEST_METHOD"];
 $router->route($uri, $method);
 
 
-//// connect to SQL DB
-//require "Database.php";
-//$db = new Database($config['database']);
-

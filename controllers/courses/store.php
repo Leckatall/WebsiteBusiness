@@ -22,5 +22,5 @@ if(!empty($errors)) {
 
 $db->query('INSERT INTO Courses(Name) VALUES(:Name)', ['Name' => $_POST["name"]]);
 
-header('Location: /courses');
-exit();
+redirect('/courses');
+

@@ -22,6 +22,10 @@ class Database {
         return $statement;
     }
 
+    public function getLastInsertId(){
+        return $this->connection->lastInsertId();
+    }
+
 }
 
 

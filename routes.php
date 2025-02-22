@@ -23,6 +23,10 @@ $router->addRoute('GET', '/course', 'controllers/courses/show.php');
 $router->addRoute('DELETE', '/course', 'controllers/courses/destroy.php', (new TutorAccess));
 $router->addRoute('GET', '/courses/create', 'controllers/courses/create.php', (new TutorAccess));
 
+$router->addRoute('GET', '/courses/lessons/create', 'controllers/courses/lessons/create.php', (new TutorAccess));
+$router->addRoute('POST', '/courses/lessons', 'controllers/courses/lessons/store.php', (new TutorAccess));
+$router->addRoute('POST', '/courses/resources', 'controllers/courses/resources/create.php', (new TutorAccess));
+
 
 $router->addRoute('GET', '/login', 'controllers/accounts/login.php');
 $router->addRoute('GET', '/logout', 'controllers/accounts/logout.php');
