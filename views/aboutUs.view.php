@@ -1,19 +1,16 @@
 
 <section class="about-us">
-    We are a collection of Uni Students commited to promptly developing
-    and maintaining professional and X websites
+Discover a platform that brings learning, teaching, and collaboration together in one seamless experience. 
+Academy offers a wide range of tools to help students engage with content and instructors efficiently,
+while providing educators with everything they need to create and manage courses. 
+Start exploring and make the most of your learning experience today!
+
+
 </section>
 <br />
-<section class="mission-statement">
-    In today's rapidly evolving digital landscape, businesses are
-    constantly on the lookout for innovative strategies to differentiate
-    themselves online. With consumer trends shifting towards seamless
-    digital experiences, our website design services are tailored to
-    meet the demands of modern consumers. From visually enchanting
-    designs to intuitive user interfaces, we specialize in creating
-    websites that charm audiences and drive meaningful engagement. Let's
-    work together to elevate your online presence and propel your
-    business to new heights of success.
+<section class="meet-our-team">
+Created and managed by a dedicated team of Liverpool Hope univeristy students
+Meet our Team:
 </section>
 <br />
 <br />
@@ -35,23 +32,8 @@
                             height="150" />
                     </div>
                     <div class="member-definition">
-                        <div class="member-name">lil' Dave</div>
-                        <div class="member-title">Our MVP</div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img
-                            alt="tester file, thoughts?"
-                            src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
-                            width="150"
-                            height="150" />
-                    </div>
-                    <div class="member-definition">
-                        <div class="member-name"><b>Kieran</b></div>
-                        <div class="member-title"><b>VP</b></div>
+                        <div class="member-name">Dawid</div>
+                        <div class="member-title">Year 2 Computer Science</div>
                     </div>
                 </div>
             </li>
@@ -66,7 +48,37 @@
                     </div>
                     <div class="member-definition">
                         <div class="member-name"><b>Patrick</b></div>
-                        <div class="member-title"><b>(Unclear)</b></div>
+                        <div class="member-title"><b>Year 2 Computer Science</b></div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img
+                            alt="tester file, thoughts?"
+                            src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                            width="150"
+                            height="150" />
+                    </div>
+                    <div class="member-definition">
+                        <div class="member-name"><b>Luigi</b></div>
+                        <div class="member-title"><b>Year 2 Computer Science</b></div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img
+                            alt="tester file, thoughts?"
+                            src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                            width="150"
+                            height="150" />
+                    </div>
+                    <div class="member-definition">
+                        <div class="member-name"><b>Sean</b></div>
+                        <div class="member-title"><b>Year 2 Computer Science</b></div>
                     </div>
                 </div>
             </li>
