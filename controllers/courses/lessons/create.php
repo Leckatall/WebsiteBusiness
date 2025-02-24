@@ -1,13 +1,12 @@
 <?php
 
-use Core\App;
-use Core\Database\Database;
+use Core\Database\Models\CourseModel;
+use Core\Session;
 
-$db = App::run(Database::class);
-$courses = $db->query("SELECT * FROM courses")->fetchAll();
+$courses = (new CourseModel)->getAll();
 
 load_view('courses/lessons/create.view.php', [
     'heading' => 'Add a Lesson',
     'courses' => $courses,
-    'errors' => []
+    'errors' => Session::get('lesson_create_errors')
 ]);

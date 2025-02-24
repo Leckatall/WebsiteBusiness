@@ -19,10 +19,6 @@ if (!$account) {
     redirect('/login');
 }
 
-session_regenerate_id(true);
-$_SESSION['user_id'] = $account['Id'];
-$_SESSION['privilege_level'] = $account['PrivilegeLvl'];
-
-redirect("/account?id={$_SESSION['user_id']}");
+redirect("/account?id={$account['id']}");
 
 

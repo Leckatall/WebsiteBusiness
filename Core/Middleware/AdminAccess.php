@@ -6,6 +6,6 @@ class AdminAccess implements Authoriser
 {
     public static function authorise(): bool
     {
-        return $_SESSION['privilege_level'] >= 3;
+        return ($_SESSION['user']['privilege_level'] ?? 0) >= 3;
     }
 }

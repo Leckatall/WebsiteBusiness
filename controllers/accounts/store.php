@@ -30,12 +30,13 @@ if ($account_model->accountExists($email)) {
     redirect('/register');
 }
 // Should always work ig?
-$account_model->register($email, $password, $privilegeLevel);
+$accountId = $account_model->register($email, $password, $privilegeLevel);
 if ($errors) {
     // failed validation
     Session::flash('registration_errors', $errors);
     redirect('/register');
 }
 
+$account_model->login($email, $password);
 
-redirect("/account?id={$_SESSION['user_id']}");
+redirect("/account?id={$_SESSION['user']['id']}");

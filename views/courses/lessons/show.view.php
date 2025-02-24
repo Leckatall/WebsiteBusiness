@@ -1,7 +1,7 @@
 
     <main>
         <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-            <form method="POST" action="/courses/lessons" enctype="multipart/form-data">
+            <form method="POST" action="/lessons" enctype="multipart/form-data">
                 <label for="lessonTitle">Lesson Title</label>
                 <div>
                     <textarea id="lessonTitle" name="name" placeholder="Title" required><?= $_POST['name'] ?? '' ?></textarea>

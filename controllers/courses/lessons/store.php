@@ -2,6 +2,9 @@
 
 use Core\App;
 use Core\Database\Database;
+use Core\Database\Models\CourseModel;
+use Core\Database\Models\LessonModel;
+use Core\Session;
 use Core\Validator;
 
 $db = App::run(Database::class);
@@ -13,7 +16,7 @@ $description = $_POST['description'];
 $courseId = $_POST['courseId'];
 $setDate = $_POST['set_date'];
 $dueDate = $_POST['due_date'] ?? null;
-$userId = $_SESSION['user_id'];
+$userId = $_SESSION['userId'];
 $courseId = $_REQUEST['courseId'];
 
 // Validate Title
@@ -25,33 +28,29 @@ if (!Validator::validateString($description, 1, 1000)) {
     $errors["description"] = "A description of less than 1000 characters is required";
 }
 // Ensure CourseId exists
-if (count($db->query("SELECT Id FROM courses WHERE Id = :id",
-        ['id' => $courseId])->fetchAll()) < 1) {
-    $errors["courseId"] = "Course ID does not exist";
+if (!(new CourseModel)->getById($courseId)) {
+    $errors["courseId"] = "CourseId does not exist";
 }
 
 if (!empty($errors)) {
     // failed validation
-    $courses = $db->query("SELECT * FROM Courses WHERE Id = :id",
-        ['id' => $courseId])->fetchAll();
-    load_view('courses/lessons/create.view.php', [
-        'heading' => 'Add a Course',
-        'courses' => $courses,
-        'errors' => $errors
-    ]);
-    dd($errors);
+    Session::flash('lesson_create_errors', $errors);
+    redirect('/lessons/create');
 }
 
-$db->query('INSERT INTO LESSONS(CourseId, AuthorId, Title, Description, SetDate, DueDate) 
-            VALUES(:courseId, :userId, :title, :description, :setDate, :dueDate)', [
-    'courseId' => $courseId,
-    'userId' => $_SESSION['user_id'],
-    'title' => $title,
-    'description' => $description,
-    'setDate' => $setDate,
-    'dueDate' => $dueDate
-]);
-$lessonId = $db->getLastInsertId();
+// Before implementing models. This junk was littered about my code
+//$db->query('INSERT INTO LESSONS(CourseId, AuthorId, Title, Description, SetDate, DueDate)
+//            VALUES(:courseId, :userId, :title, :description, :setDate, :dueDate)', [
+//    'courseId' => $courseId,
+//    'userId' => $_SESSION['user']['id'],
+//    'title' => $title,
+//    'description' => $description,
+//    'setDate' => $setDate,
+//    'dueDate' => $dueDate
+//]);
+
+$lessonId = (new LessonModel)->addLesson($courseId, $title, $description, $setDate, $dueDate);
+
 $uploadDir = base_path("public/uploads/lessons/lesson{$lessonId}/");
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0775, true); // 0775 gives write permissions to owner and group

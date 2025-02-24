@@ -6,6 +6,6 @@ class StudentAccess implements Authoriser
 {
     public static function authorise(): bool
     {
-        return $_SESSION['privilege_level'] >= 1;
+        return ($_SESSION['user']['privilege_level'] ?? 0) >= 1;
     }
 }

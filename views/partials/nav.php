@@ -16,13 +16,7 @@ function navbar_link($title, $page)
             <ul class="navbar-nav">
                 <li class="nav-item"><?= navbar_link("Home", "/") ?></li>
                 <li class="nav-item"><?= navbar_link("About", "/aboutUs") ?></li>
-
-                <?php if ($_SESSION['user_id'] ?? false) : ?>
-                    <li class="nav-item"><?= navbar_link("Portal", "/portal?id={$_SESSION['user_id']}") ?></li>
-                    <li class="nav-item"><?= navbar_link("Account", "/account?id={$_SESSION['user_id']}") ?></li>
-                <?php else : ?>
-                    <li class="nav-item"><?= navbar_link("Login", "/login") ?></li>
-                <?php endif ?>
+                <?php load_partial('nav-portal-selector.php') ?>
                 <li class="nav-item"><?= navbar_link("Courses", "/courses") ?></li>
                 <li>
                     <button onclick="document.getElementById('login_widget').style.display='block'">LoginM8</button>

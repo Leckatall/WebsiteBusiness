@@ -6,6 +6,6 @@ namespace Core\Middleware;
 class LoggedInAccess implements Authoriser{
     public static function authorise(): bool
     {
-        return isset($_SESSION["user_id"]);
+        return isset($_SESSION['user']['id']);
     }
 }

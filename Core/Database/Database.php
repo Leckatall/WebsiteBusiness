@@ -5,7 +5,7 @@ namespace Core\Database;
 use PDO;
 
 class Database {
-    private static self $instance;
+    private static ?Database $instance = null;
     private PDO $connection;
 
     public function __construct($config, $username='root', $password='') {
@@ -16,31 +16,18 @@ class Database {
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
     }
-    public static function getInstance() {
+    public static function getInstance(): Database
+    {
         if(!self::$instance){
             $config = require_once base_path('config.php');
             self::$instance = new Database($config['database']);
         }
         return self::$instance;
     }
-    public function getConnection() {
+    public function getConnection(): PDO
+    {
         return $this->connection;
     }
-    public function query($query, $params = []){
-        $statement = $this->connection->prepare($query);
-        $statement->execute($params);
-
-        return $statement;
-    }
-
-    public function getLastInsertId(){
-        return $this->connection->lastInsertId();
-    }
-
-    public function init(){
-
-    }
-
 }
 
 

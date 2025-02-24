@@ -1,14 +1,10 @@
 <?php
 
-use Core\App;
-use Core\Database\Database;
+use Core\Database\Models\CourseModel;
 
 
-$db = App::run(Database::class);
-
-// TODO: Add Auths
-$db->query('DELETE FROM Courses WHERE id = :id', ['id' => $_POST['id']]);
-
+// course_id > id to ensure no accidental deletions
+(new CourseModel)->deleteById($_POST['course_id']);
 
 redirect('/courses');
 

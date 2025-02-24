@@ -1,21 +1,22 @@
 <?php
 
-use Core\App;
-use Core\Database\Database;
+
+use Core\Database\Models\CourseModel;
+use Core\Database\Models\LessonModel;
 
 
-$db = App::run(Database::class);
+$course_id = $_GET['id'];
 
-$course = $db->query('SELECT * FROM Courses WHERE id = :id', [
-    'id' => $_GET['id']
-])->fetch();
+$course_model = new CourseModel;
+$course = $course_model->getById($course_id);
+$isParticipant = $course_model->isUserInCourse($_SESSION['user']['id'], $course_id);
 
-$lessons = $db->query('SELECT * FROM Lessons WHERE CourseId = :course_id',
-    ['course_id' => $_GET['id']])->fetchAll();
+$lessons = (new LessonModel)->getAllForCourse($course_id);
 
 //$resources = $db->query('SELECT * FROM Resources WHERE CourseId = :id', ['id' => $_GET['id']]);
 load_view('courses/show.view.php', [
-    'heading' => htmlspecialchars($course["Name"]),
+    'heading' => htmlspecialchars($course["name"]),
     'course' => $course,
-    'lessons' => $lessons
+    'lessons' => $lessons,
+    'isParticipant' => $isParticipant
 ]);

@@ -9,8 +9,8 @@ require BASE_PATH . "Core/functions.php";
 
 // Starts a session
 session_start();
-if(!isset($_SESSION['privilege_level'])){
-    $_SESSION['privilege_level'] = 0;
+if(!isset($_SESSION['user']['privilege_level'])){
+    $_SESSION['user']['privilege_level'] = 0;
 }
 
 spl_autoload_register(function ($class) {
@@ -35,8 +35,7 @@ $router->route($uri, $method);
 
 Session::clearFlash();
 
-// TODO: Allow tutors to authorise student accounts
-// TODO: Tutors authorised by admin?
+// TODONB: Authorise accounts interface
 // TODO: Students can access files in courses
 // TODO: Students can apply to enroll in a course and be approved by the tutor
 // TODO: Students can only view courses they are enrolled in

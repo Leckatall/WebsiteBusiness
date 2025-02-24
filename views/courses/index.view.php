@@ -3,8 +3,8 @@
     <ul>
     <?php foreach ($courses as $course): ?>
      <li>
-         <a href="/course?id=<?= htmlspecialchars($course['Id']) ?>">
-            <?= $course['Name'] ?>
+         <a href="/course?id=<?= htmlspecialchars($course['id']) ?>">
+            <?= $course['name'] ?>
          </a>
      </li>
     <?php endforeach ?>

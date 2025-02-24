@@ -6,6 +6,6 @@ class TutorAccess implements Authoriser
 {
     public static function authorise(): bool
     {
-        return $_SESSION['privilege_level'] >= 2;
+        return ($_SESSION['user']['privilege_level'] ?? 0) >= 2;
     }
 }

@@ -1,12 +1,9 @@
 <?php
 
-use Core\App;
-use Core\Database\Database;
+use Core\Database\Models\CourseModel;
 
 
-$db = App::run(Database::class);
-
-$courses = $db->query("SELECT * FROM courses")->fetchAll();
+$courses = (new CourseModel)->getAll();
 
 load_view('courses/index.view.php',
     ['heading' => 'Courses',

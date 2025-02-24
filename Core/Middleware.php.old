@@ -36,7 +36,7 @@ class AccountAccess implements Authoriser
 {
     public static function authorise(): bool
     {
-        return ($_SESSION['user_id'] == $_REQUEST['Id']) OR ($_SESSION['privilege_level'] >= 3);
+        return ($_SESSION['user']['id'] == $_REQUEST['Id']) OR ($_SESSION['user']['privilege_level'] >= 3);
     }
 }
 
@@ -44,13 +44,13 @@ class TutorAccess implements Authoriser
 {
     public static function authorise(): bool
     {
-        return $_SESSION['privilege_level'] >= 2;
+        return $_SESSION['user']['privilege_level'] >= 2;
     }
 }
 class StudentAccess implements Authoriser
 {
     public static function authorise(): bool
     {
-        return $_SESSION['privilege_level'] >= 1;
+        return $_SESSION['user']['privilege_level'] >= 1;
     }
 }

@@ -14,7 +14,7 @@ class Model
         $this->connection = Database::getInstance()->getConnection();
     }
 
-    public function query($query, $params = []){
+    protected function query($query, $params = []){
         $statement = $this->connection->prepare($query);
         $statement->execute($params);
 
@@ -22,13 +22,28 @@ class Model
     }
 
     public function getAll(){
-        return $this->query("SELECT * FROM {$this->table}")->fetchAll();
+        return $this->query("SELECT * FROM $this->table")->fetchAll();
+    }
+    public function getById($id){
+        return $this->query("SELECT * FROM $this->table WHERE id = ?", [$id])->fetch();
+    }
+    public function getByIds(array $ids): array{
+        $values = [];
+        foreach ($ids as $id) {
+            $values[] = $this->getById($id);
+        }
+        return $values;
     }
 
-    public function getById($id){
-        return $this->query("SELECT * FROM {$this->table} WHERE Id = ?", [$id])->fetch();
+    public function deleteById($id){
+        return $this->query("DELETE FROM $this->table WHERE id = ?", [$id]);
     }
+
     public function count(){
         return count($this->getAll());
+    }
+
+    public function lastInsertId(): int {
+        return $this->connection->lastInsertId();
     }
 }

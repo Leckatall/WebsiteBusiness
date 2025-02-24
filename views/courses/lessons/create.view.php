@@ -1,7 +1,7 @@
 
     <main>
         <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-            <form method="POST" action="/courses/lessons" enctype="multipart/form-data">
+            <form method="POST" action="/lessons" enctype="multipart/form-data">
                 <div>
                     <label for="courseId">Lesson Course</label>
                     <select name="courseId" id="courseId">
