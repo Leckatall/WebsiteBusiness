@@ -1,13 +1,9 @@
 <?php
 
-use Core\App;
-use Core\Database\Database;
+use Core\Database\Models\AccountModel;
 
-$db = App::run(Database::class);
 
-$account = $db->query('SELECT * FROM Accounts WHERE id = :id', [
-    'id' => $_GET['id']
-])->fetch();
+$account = (new AccountModel)->getById($_GET['id']);
 const STATUSES = [
     0 => 'Pending',
     1 => 'Active'

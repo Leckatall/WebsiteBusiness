@@ -6,7 +6,7 @@ use Core\Database\Database;
 
 class Model
 {
-    protected $connection;
+    protected \PDO $connection;
     // override to enable common queries
     protected string $table;
 
@@ -26,7 +26,7 @@ class Model
     }
 
     public function getById($id){
-        return $this->query("SELECT * FROM {$this->table} WHERE Id = ?", [$id])->fetchAll();
+        return $this->query("SELECT * FROM {$this->table} WHERE Id = ?", [$id])->fetch();
     }
     public function count(){
         return count($this->getAll());

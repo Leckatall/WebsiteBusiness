@@ -1,12 +1,8 @@
 <?php
 
-use Core\App;
-use Core\Database\Database;
+use Core\Database\Models\AccountModel;
 
-$db = App::run(Database::class);
-
-$accounts = $db->query("SELECT * FROM Accounts")->fetchAll();
-
+$accounts = (new AccountModel)->getAll();
 load_view('courses/index.view.php',
     ['heading' => 'Courses',
         'accounts' => $accounts]);

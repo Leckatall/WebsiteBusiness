@@ -1,11 +1,9 @@
 <?php
 
-use Core\Database\AccountManager;
 use Core\Database\Models\AccountModel;
 use Core\Session;
 
 
-// If the login at// Logs the user in and adds ['user_id'] to the sessiontempt fails the reason is returned as a string
 $email = $_POST['email'];
 $password = $_POST['password'];
 

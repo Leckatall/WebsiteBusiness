@@ -8,23 +8,35 @@ class AccountModel extends Model
 {
     protected string $table = 'Accounts';
 
+    public function __init_table(): void
+    {
+        // TODO: Refactor to follow this structure
+        $this->query("CREATE TABLE IF NOT EXISTS Accounts (
+                            id INT PRIMARY KEY AUTO_INCREMENT,
+                            email VARCHAR(255) UNIQUE NOT NULL,
+                            password_hash VARCHAR(255) NOT NULL,
+                            role_id INT NOT NULL
+                    )");
+    }
+
     public function register($email, $password, $privilege_level)
     {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $this->query('INSERT INTO Accounts 
                     (Email, Password, PrivilegeLvl, Status) VALUES
                     (:Email, :Password, :PrivilegeLvl, :Status)', [
-                        "Email" => $email,
-                        "Password" => $password,
-                        "PrivilegeLvl" => $privilege_level,
-                        "Status" => 0
+            "Email" => $email,
+            "Password" => $password,
+            "PrivilegeLvl" => $privilege_level,
+            "Status" => 0
         ]);
     }
 
     public function accountExists($email): bool
     {
-        return (bool) $this->query('SELECT * FROM Accounts WHERE email = :Email', ["Email" => $email])->fetch();
+        return (bool)$this->query('SELECT * FROM Accounts WHERE email = :Email', ["Email" => $email])->fetch();
     }
+
     public function login($email, $password)
     {
         $account = $this->query('SELECT * FROM Accounts WHERE email = :Email', ["Email" => $email])->fetch();
@@ -46,6 +58,7 @@ class AccountModel extends Model
     {
         return $this->query('SELECT Id, Email FROM Accounts WHERE Status = 0 AND PrivilegeLvl = 2;')->fetchAll();
     }
+
     public function approveAccount($accountId)
     {
         $this->query('UPDATE Accounts SET Status = 1 WHERE Id = :id', ["id" => $accountId]);

@@ -1,6 +1,5 @@
 <?php
 
-use Core\Database\AccountManager;
 use Core\Database\Models\AccountModel;
 use Core\Session;
 use Core\Validator;
