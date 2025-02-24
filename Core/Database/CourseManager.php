@@ -6,6 +6,7 @@ use Core\App;
 
 class CourseManager
 {
+    // TODO: Implement this
     public static function getCourses(){
 
     }

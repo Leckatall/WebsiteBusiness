@@ -18,7 +18,7 @@ function navbar_link($title, $page)
                 <li class="nav-item"><?= navbar_link("About", "/aboutUs") ?></li>
 
                 <?php if ($_SESSION['user_id'] ?? false) : ?>
-                    <li class="nav-item"><?= navbar_link("Portal", "/portal") ?></li>
+                    <li class="nav-item"><?= navbar_link("Portal", "/portal?id={$_SESSION['user_id']}") ?></li>
                     <li class="nav-item"><?= navbar_link("Account", "/account?id={$_SESSION['user_id']}") ?></li>
                 <?php else : ?>
                     <li class="nav-item"><?= navbar_link("Login", "/login") ?></li>

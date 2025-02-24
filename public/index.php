@@ -1,6 +1,7 @@
 <?php
 
 use Core\Router;
+use Core\Session;
 
 const BASE_PATH = __DIR__ . '/../';
 
@@ -31,6 +32,8 @@ $uri = parse_url($_SERVER["REQUEST_URI"])["path"];
 $method = $_POST['_method'] ?? $_SERVER["REQUEST_METHOD"];
 
 $router->route($uri, $method);
+
+Session::clearFlash();
 
 // TODO: Allow tutors to authorise student accounts
 // TODO: Tutors authorised by admin?

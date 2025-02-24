@@ -31,10 +31,11 @@ $router->addRoute('GET', '/login', 'controllers/accounts/login.php');
 $router->addRoute('GET', '/logout', 'controllers/accounts/logout.php');
 $router->addRoute('POST', '/account', 'controllers/accounts/authorise.php');
 $router->addRoute('GET', '/account', 'controllers/accounts/show.php', (new AccountAccess));
-$router->addRoute('GET', '/portal', 'controllers/portals/route_to_portals.php', (new AccountAccess));
+$router->addRoute('GET', '/portal', 'controllers/portals/route_to_portal.php', (new AccountAccess));
 
 $router->addRoute('GET', '/register', 'controllers/accounts/register.php');
 $router->addRoute('GET', '/accounts', 'controllers/accounts/index.php', (new AdminAccess));
 $router->addRoute('POST', '/accounts', 'controllers/accounts/store.php');
+$router->addRoute('POST', '/accounts/enroll', 'controllers/accounts/enroll.php');
 
 

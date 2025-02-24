@@ -7,8 +7,8 @@ $portals  = [
 ];
 
 
-if (!array_key_exists($_SESSION['permission_level'], $portals)) {
+if (!array_key_exists($_SESSION['privilege_level'], $portals)) {
     redirect("/");
 }
-$portal = $portals[$_SESSION['permission_level']];
+$portal = $portals[$_SESSION['privilege_level']];
 require $portal;
