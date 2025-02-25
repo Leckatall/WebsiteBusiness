@@ -46,4 +46,13 @@ class Session
         session_regenerate_id(true);
         $_SESSION['logged_in'] = false;
     }
+
+    public static function getRole(): int
+    {
+        return $_SESSION['user']['privilege_level'] ?? 0;
+    }
+    public static function getId(): int
+    {
+        return $_SESSION['user']['id'] ?? -1;
+    }
 }

@@ -1,27 +1,20 @@
 
-<main>
-    <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-        <h1>The Account Page for <?= htmlspecialchars($account["email"]) ?></h1>
-    </div>
-    <div>
+<main class="mx-auto">
+    <div class='mx-auto w-75 mx-4 py-6 px-6'>
+        <h3>Email: <?= htmlspecialchars($account["email"]) ?></h3>
+        <br>
         <h3>Account Status: <?=  $account["approved"] ? 'Approved': 'Pending'?></h3>
-    </div>
-    <div>
+        <br>
         <h3>Account Privilege Level: <?= $account["privilege_level"]?></h3>
-    </div>
-
-    <div>
+        <br>
         <h3>Session Privilege Level: <?= $_SESSION['user']['privilege_level']?></h3>
-    </div>
-
-    <div>
+        <br>
+    <div class="w-auto px-3">
         <a href="/logout">Logout</a>
-    </div>
-
-    <form method="POST">
+        <form method="POST" action="/accounts/<?= $account['id'] ?>">
         <input type="hidden" name="_method" value="DELETE">
-        <input type="hidden" name="id" value="<?= $account['id'] ?>">
-        <button class="text-sm text-red-500">DELETE ACCOUNT</button>
+        <button class="btn btn-danger px-auto">Delete Account</button>
     </form>
+    </div>
 </main>
 

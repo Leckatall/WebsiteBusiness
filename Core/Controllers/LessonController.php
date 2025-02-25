@@ -2,8 +2,8 @@
 
 namespace Core\Controllers;
 
-use Core\Database\Models\CourseModel;
-use Core\Database\Models\LessonModel;
+use Core\Models\CourseModel;
+use Core\Models\LessonModel;
 use Core\Session;
 use Core\Validator;
 

@@ -5,31 +5,30 @@
             <input type="hidden" name="_method" value="PATCH">
             <input type="hidden" name="action" value="update">
             <input type="hidden" name="course_id" value="<?= $course['id']; ?>">
-            <label for="name">Course Name</label>
-            <div>
-                <textarea id="name" name="name" required><?= $course['name'] ?? $_POST['name'] ?? '' ?></textarea>
-                <?php if (isset($errors['name'])) : ?>
-                    <p class="text-red-500 text-xs mt-2"><?= $errors['name'] ?></p>
-                <?php endif; ?>
-            </div>
-            <label for="desc">Course Description</label>
-            <div>
-                <textarea id="desc" name="description"
-                          required><?= $course['description'] ?? $_POST['description'] ?? '' ?></textarea>
-                <?php if (isset($errors['description'])) : ?>
-                    <p class="text-red-500 text-xs mt-2"><?= $errors['description'] ?></p>
-                <?php endif; ?>
-            </div>
+            <?php load_partial('handled_input.php', [
+                    'id' => 'name',
+                    'name' => 'Course Name',
+                    'type' => 'text',
+                    'required' => true,
+                    'default' => $course]) ?>
+
+            <?php load_partial('handled_input.php', [
+                    'id' => 'description',
+                    'name' => 'Course Description',
+                    'tag' => 'textarea',
+                    'required' => true,
+                    'default' => $course]) ?>
             <p>
-                <a href="/course?id=<?= $course['id'] ?>">Back</a>
-                <button type="reset">Reset</button>
-                <button type="submit">Update Course</button>
+                <a href=".">Back</a>
+                <button type="reset" class="btn btn-check">Reset</button>
+                <button type="submit" class="btn btn-primary">Update Course</button>
             </p>
         </form>
-        <form method="POST" action="/course">
-        <input type="hidden" name="_method" value="DELETE">
-        <input type="hidden" name="course_id" value="<?= $course['id'] ?>">
-        <button class="text-sm text-red-500">Delete Course</button>
+<!--        <form method="POST" action="/course">-->
+<!--        <input type="hidden" name="_method" value="DELETE">-->
+<!--        <input type="hidden" name="course_id" value="--><?php //= $course['id'] ?><!--">-->
+<!--        <button class="btn btn-danger">Delete Course</button>-->
+        <?php load_partial('delete_resource_button.php') ?>
     </form>
     </div>
 </main>

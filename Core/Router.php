@@ -37,22 +37,24 @@ class Router
                 $pattern = $route['uri'];
                 // Convert the route pattern to a regex
                 $pattern = preg_replace('/{(\w+)}/', '(\w+)', $pattern);
-                $pattern = '#^' . $pattern . '$#';
+                $pattern = '#^' . $pattern . '/?$#';
 
                 if (preg_match($pattern, $uri, $matches)) {
-                    // Middleware authorises whether the request will be allowed
-                    if (!$route['middleware']->authorise()) {
-                        return $this->abort(401);
-                    }
                     array_shift($matches); // Remove the URL
-                    // Instansiate the controller
-                    $controller = new $route['controllerMethod'][0];
-                    $controller_method = $route['controllerMethod'][1];
-                    // Pass the captured values to the controller method
-                    return call_user_func_array([$controller, $controller_method], $matches);
+                    // Middleware authorises whether the request will be allowed
+                    if ($route['middleware']->authorise($matches[0] ?? null)) {
+                        // Instantiate the controller
+                        $controller = new $route['controllerMethod'][0];
+                        $controller_method = $route['controllerMethod'][1];
+
+                        // Pass the captured values to the controller method
+                        return call_user_func_array([$controller, $controller_method], $matches);
+                    }
+                    return $this->abort(401);
                 }
             }
         }
+        //dd($uri);
         return $this->abort(404);
     }
 

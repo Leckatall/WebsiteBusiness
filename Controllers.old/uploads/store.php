@@ -1,6 +1,6 @@
 <?php
 
-use Core\Database\Models\FileModel;
+use Core\Models\FileModel;
 
 $file = $_FILES['file'];
 $customName = $_POST['custom_name'] ?? pathinfo($file['name'], PATHINFO_FILENAME);

@@ -1,7 +1,7 @@
 <?php
 
 
-use Core\Database\Models\AccountModel;
+use Core\Models\AccountModel;
 
 (new AccountModel)->deleteAccount($_POST['account_id'], $_SESSION['user']['privilege_level']);
 

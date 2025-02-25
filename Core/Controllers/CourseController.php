@@ -3,8 +3,8 @@
 namespace Core\Controllers;
 
 
-use Core\Database\Models\CourseModel;
-use Core\Database\Models\LessonModel;
+use Core\Models\CourseModel;
+use Core\Models\LessonModel;
 use Core\Session;
 use Core\Validator;
 
@@ -68,7 +68,7 @@ class CourseController extends BaseController
 
     public function edit(int $id): void
     {
-        $course = (new CourseModel)->getById($_GET['id']);
+        $course = (new CourseModel)->getById($id);
 
         load_view('courses/edit.view.php', [
             'heading' => 'Edit Course',
@@ -103,9 +103,7 @@ class CourseController extends BaseController
 
     public function destroy(int $id): void
     {
-        (new CourseModel)->deleteById($_POST['course_id']);
-
-        redirect('/courses');
+        (new CourseModel)->deleteById($id);
     }
 
     public function handleFormSubmission($course)

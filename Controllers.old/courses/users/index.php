@@ -1,8 +1,6 @@
 <?php
 
-use Core\Database\Models\AccountModel;
-use Core\Database\Models\CourseModel;
-use Core\Database\Models\LessonModel;
+use Core\Models\CourseModel;
 
 
 $course_id = $_GET['course_id'];

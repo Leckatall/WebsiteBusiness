@@ -1,9 +1,9 @@
-<main>
+<main class="m-5">
     <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-        <h1>The Course Page for <?= htmlspecialchars($course["name"]) ?></h1>
+        <h3><?= htmlspecialchars($course["description"]) ?></h3>
     </div>
-    <a href="course/edit?id=<?= $course['id'] ?>">Edit Course</a>
-    <a href="course/users?course_id=<?= $course['id'] ?>">View participants</a>
+    <a href="/courses/<?= $course['id'] ?>/edit">Edit Course</a>
+    <a href="/courses/<?= $course['id'] ?>/users">View participants</a>
     <?php if ($isParticipant) : ?>
 
         <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>

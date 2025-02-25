@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Database\Models;
+namespace Core\Models;
 
-use Core\Database\Database;
+use Core\Database;
 
 class Model
 {

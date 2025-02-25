@@ -1,6 +1,6 @@
 <?php
 
-use Core\Database\Models\CourseModel;
+use Core\Models\CourseModel;
 use Core\Session;
 use Core\Validator;
 

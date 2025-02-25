@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Database\Models;
+namespace Core\Models;
 
 use Core\Session;
 

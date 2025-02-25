@@ -1,6 +1,6 @@
 <?php
 
-use Core\Database\Models\AccountModel;
+use Core\Models\AccountModel;
 
 
 $account = (new AccountModel)->getById($_GET['id'] ?? $_SESSION['user']['id']);

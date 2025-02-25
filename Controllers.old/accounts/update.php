@@ -2,7 +2,7 @@
 
 //TODO: Is this file necessary?
 
-use Core\Database\Models\AccountModel;
+use Core\Models\AccountModel;
 
 function approve($account_id): void
 {

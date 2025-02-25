@@ -1,8 +1,8 @@
 <?php
 
 
-use Core\Database\Models\CourseModel;
-use Core\Database\Models\LessonModel;
+use Core\Models\CourseModel;
+use Core\Models\LessonModel;
 use Core\Session;
 
 $lesson = (new LessonModel)->getById($_GET['id']);

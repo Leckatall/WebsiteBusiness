@@ -31,4 +31,10 @@ class BaseController
     {
 
     }
+    public function abort(int $status_code=404){
+        http_response_code($status_code);
+        require base_path("views/{$status_code}.php");
+        return false;
+
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace Core\Controllers;
 
-use Core\Database\Models\AccountModel;
+use Core\Models\AccountModel;
 use Core\Session;
 use Core\Validator;
 
@@ -16,15 +16,30 @@ class AccountController extends BaseController
                 'accounts' => $accounts]);
     }
 
+    public function getIndex()
+    {
+        header('Content-Type: application/json');
+        $accounts = (new AccountModel)->getAll();
+        if (!$accounts) {
+            echo json_encode(["data" => [], "error" => "No courses found"]);
+        } else {
+            echo json_encode(["data" => $accounts]);
+        }
+    }
+
     public function show(int $id)
     {
-        $account = (new AccountModel)->getById($_GET['id'] ?? $_SESSION['user']['id']);
+        $account = (new AccountModel)->getById($id);
 
         load_view("accounts/show.view.php", [
             "heading" => "Your Account",
             "account" => $account
         ]);
+    }
 
+    public function showMyAccount()
+    {
+        $this->show(Session::getId());
     }
 
     public function register(): void
@@ -79,14 +94,20 @@ class AccountController extends BaseController
 
     public function update(int $id): void
     {
-        function approve($account_id): void
+        function approve($account_id): bool
         {
-            (new AccountModel)->approveAccount($account_id, $_SESSION['user']['id']);
+            return (new AccountModel)->approveAccount($account_id, $_SESSION['user']['id']);
         }
-
-        // TODO: Give feedback to the user if they don't have the permissions
-        if ($_POST['action'] == 'approve') {
-            approve($_POST['account_id']);
+        $data = json_decode(file_get_contents("php://input"), true);
+        $action = $data['action'] ?? '';
+        if ($action == 'approve') {
+            if(approve($id)){
+                echo json_encode(["success" => true]);
+            }else{
+                echo json_encode(["error" => "failed to approve account"]);
+                $this->abort(500);
+            }
+            exit();
         }
 
         redirect('/accounts');
@@ -120,7 +141,7 @@ class AccountController extends BaseController
             redirect('/login');
         }
 
-        redirect("/account?id={$account['id']}");
+        redirect("/accounts/{$account['id']}");
     }
 
     public function logout(): void

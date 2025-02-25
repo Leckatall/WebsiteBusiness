@@ -1,6 +1,6 @@
 <?php
 
-use Core\Database\Models\AccountModel;
+use Core\Models\AccountModel;
 
 $accounts = (new AccountModel)->getAll();
 load_view('accounts/index.view.php',

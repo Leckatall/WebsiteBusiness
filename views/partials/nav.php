@@ -1,5 +1,5 @@
 <?php
-function navbar_link($title, $page)
+function navbar_link($title, $page): string
 {
     $active_page = $page == $_SERVER['REQUEST_URI'] ? "active" : "";
     return "<a class='nav-link $active_page' href='$page'>$title</a>";
@@ -8,19 +8,21 @@ function navbar_link($title, $page)
 ?>
 
 <header class="mb-auto">
-    <div class="image-container">
-        <img class="float-md-start" alt="chilling" src=<?= get_image_src("HangingOutWithController.jpg") ?>>
-    </div>
-    <nav class="navbar navbar-expand-sm">
+    <nav class="navbar navbar-expand-sm mx-auto">
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item"><?= navbar_link("Home", "/") ?></li>
                 <li class="nav-item"><?= navbar_link("About", "/aboutUs") ?></li>
-                <?php load_partial('nav-portal-selector.php') ?>
-                <li class="nav-item"><?= navbar_link("Courses", "/courses") ?></li>
-                <li>
-                    <button onclick="document.getElementById('login_widget').style.display='block'">LoginM8</button>
-                </li>
+                <?php if ($_SESSION['logged_in']) : ?>
+                    <li class="nav-item"><?= navbar_link("Portal", "/portal") ?></li>
+                    <li class="nav-item">
+                        <?= navbar_link("Your Account",
+                            "/accounts/{$_SESSION['user']['id']}") ?>
+                    </li>
+                    <li class="nav-item"><?= navbar_link("Courses", "/courses") ?></li>
+                <?php else : ?>
+                    <li class="nav-item"><?= navbar_link("Login", "/login") ?></li>
+                <?php endif ?>
             </ul>
         </div>
     </nav>

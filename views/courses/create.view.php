@@ -1,26 +1,22 @@
 
 <main>
-<div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-    <form method="POST" action="/courses">
-        <label for="name">Course Name</label>
-        <div>
-            <textarea id="name" name="name" required><?= $_POST['name'] ?? ''?></textarea>
-            <?php if (isset($errors['name'])) : ?>
-                <p class="text-red-500 text-xs mt-2"><?= $errors['name'] ?></p>
-            <?php endif; ?>
-        </div>
-        <label for="desc">Course Description</label>
-        <div>
-            <textarea id="desc" name="description" required><?= $_POST['description'] ?? ''?></textarea>
-            <?php if (isset($errors['description'])) : ?>
-                <p class="text-red-500 text-xs mt-2"><?= $errors['description'] ?></p>
-            <?php endif; ?>
-        </div>
-        <p>
-            <button type="submit">
-                Add Course
-            </button>
-        </p>
+<div class='mx-5 p-3 card'>
+    <form method="POST" action="/courses" class="form-group">
+        <?php load_partial('handled_input.php', [
+                    'id' => 'name',
+                    'name' => 'Course Name',
+                    'type' => 'text',
+                    'required' => true]) ?>
+
+            <?php load_partial('handled_input.php', [
+                    'id' => 'description',
+                    'name' => 'Course Description',
+                    'tag' => 'textarea',
+                    'required' => true]) ?>
+        <br>
+        <button type="submit" class="px-4 btn btn-primary form-control">
+            Add Course
+        </button>
     </form>
 </div>
 </main>

@@ -1,48 +1,44 @@
-
 <main>
-    <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-        <form class="mt-8 space-y-6" action="/accounts" method="POST">
+    <div class='card p-3 m-3 w-25 mx-auto'>
+        <form class="form-group " action="/accounts" method="POST">
             <div class="-space-y-px rounded-md shadow-sm">
+
                 <div>
                     <label for="email" class="sr-only">Email address</label>
                     <input id="email" name="email" type="email" autocomplete="email" required
-                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                           class="form-control mb-3"
                            placeholder="Email address">
+                    <?php if (isset($errors['email'])) : ?>
+                        <p class="text-red-500 text-xs mt-2"><?= $errors['email'] ?></p>
+                    <?php endif; ?>
                 </div>
+
 
                 <div>
                     <label for="password" class="sr-only">Password</label>
                     <input id="password" name="password" type="password" autocomplete="current-password" required
-                           class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                           class="form-control mb-3"
                            placeholder="Password">
+                    <?php if (isset($errors['password'])) : ?>
+                        <p class="text-red-500 text-xs mt-2"><?= $errors['password'] ?></p>
+                    <?php endif; ?>
                 </div>
             </div>
-            <div class="-space-y-px rounded-md shadow-sm">
-                <label for="privilegeLevel">Select Account Type:</label>
-                <select name="privilegeLevel" id="privilegeLevel">
+            <div class="rounded-md shadow-sm">
+                <label for="privilegeLevel" class="form-label">Account Type:</label>
+                <select class="form-control form-select" name="privilegeLevel" id="privilegeLevel">
                     <option value=1>Student</option>
                     <option value=2>Tutor</option>
                     <option value=3>Admin</option>
                 </select>
             </div>
-            <div>
+            <div class="mx-2 my-2 py-2">
                 <button type="submit"
-                        class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
+                        class="btn btn-primary form-control px-2">
                     Register
                 </button>
             </div>
 
-            <ul>
-                <?php if (isset($errors['email'])) : ?>
-                    <li class="text-red-500 text-xs mt-2"><?= $errors['email'] ?></li>
-                <?php endif; ?>
-
-                <?php if (isset($errors['password'])) : ?>
-                    <li class="text-red-500 text-xs mt-2"><?= $errors['password'] ?></li>
-                <?php endif; ?>
-            </ul>
         </form>
     </div>
 </main>
-

@@ -1,6 +1,6 @@
 <?php
 
-use Core\Database\Models\CourseModel;
+use Core\Models\CourseModel;
 
 $userId = $_SESSION['user']['id'];
 $courseId = $_POST['course_id'];

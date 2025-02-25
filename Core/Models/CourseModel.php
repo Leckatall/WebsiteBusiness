@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Database\Models;
+namespace Core\Models;
 
 class CourseModel extends Model
 {
@@ -49,6 +49,19 @@ class CourseModel extends Model
                                    INNER JOIN accounts ON Course_users.accountId = accounts.id
                                    WHERE courseId = :CourseId", [
             "CourseId" => $courseId
+        ])->fetchAll();
+    }
+
+    public function getCoursesForUser(int $accountId): array
+    {
+        return $this->query("SELECT Course_users.courseId AS id,
+                                          Courses.name AS name,
+                                          Course_users.score AS score, 
+                                          Course_users.approved AS approved
+                                   FROM Course_users
+                                   INNER JOIN Courses ON Course_users.courseId = Courses.id
+                                   WHERE Course_users.accountId = :AccountId", [
+            "AccountId" => $accountId
         ])->fetchAll();
     }
 

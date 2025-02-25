@@ -10,7 +10,7 @@ namespace Core\Middleware;
 // Do not route users who have no account
 class AccountAccess implements Authoriser
 {
-    public static function authorise(): bool
+    public static function authorise(?int $id): bool
     {
         if (!$_SESSION['logged_in']) {
             return false;
@@ -18,9 +18,9 @@ class AccountAccess implements Authoriser
         if ($_SESSION['user']['privilege_level'] >= 3){
             return true;
         }
-        if (!$_REQUEST['id']){
+        if (!$id){
             return true;
         }
-        return ($_SESSION['user']['id'] == $_REQUEST['id']);
+        return ($_SESSION['user']['id'] == $id);
     }
 }

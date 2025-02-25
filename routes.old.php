@@ -6,7 +6,6 @@
 //    "/login" => "controllers/login.php",
 //];
 
-use Core\Database\Models\CourseModel;
 use Core\Middleware\AccountAccess;
 use Core\Middleware\AdminAccess;
 use Core\Middleware\LoggedInAccess;

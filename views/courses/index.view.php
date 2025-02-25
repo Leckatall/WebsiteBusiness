@@ -1,14 +1,11 @@
-<main>
-<div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-    <ul>
+<main class="m-5">
+<div class='mx-auto  py-6 list-group'>
     <?php foreach ($courses as $course): ?>
-     <li>
-         <a href="/course?id=<?= htmlspecialchars($course['id']) ?>">
+         <a href="/courses/<?= htmlspecialchars($course['id']) ?>"
+            class="px-6 list-group-item list-group-item-action">
             <?= $course['name'] ?>
          </a>
-     </li>
     <?php endforeach ?>
-    </ul>
     <p class="mt-6">
         <a href="/courses/create" class="text-blue-500 hover:underline">Add Course</a>
     </p>

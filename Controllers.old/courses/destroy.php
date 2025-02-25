@@ -1,6 +1,6 @@
 <?php
 
-use Core\Database\Models\CourseModel;
+use Core\Models\CourseModel;
 
 
 // course_id > id to ensure no accidental deletions

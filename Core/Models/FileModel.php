@@ -1,8 +1,6 @@
 <?php
 
-namespace Core\Database\Models;
-
-use Core\Database\Models\Model;
+namespace Core\Models;
 
 class FileModel extends Model
 {
