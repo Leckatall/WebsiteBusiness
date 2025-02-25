@@ -6,6 +6,7 @@
 //    "/login" => "controllers/login.php",
 //];
 
+use Core\Database\Models\CourseModel;
 use Core\Middleware\AccountAccess;
 use Core\Middleware\AdminAccess;
 use Core\Middleware\LoggedInAccess;
@@ -29,9 +30,14 @@ $router->addRoute('GET', '/courses/create', 'controllers/courses/create.php', (n
 $router->addRoute('GET', '/course/edit', 'controllers/courses/edit.php', (new TutorAccess));
 
 $router->addRoute('GET', '/lessons/create', 'controllers/courses/lessons/create.php', (new TutorAccess));
+$router->addRoute('GET', '/lessons/edit', 'controllers/courses/lessons/edit.php', (new TutorAccess));
 $router->addRoute('POST', '/lessons', 'controllers/courses/lessons/store.php', (new TutorAccess));
 $router->addRoute('POST', '/courses/resources', 'controllers/courses/resources/create.php', (new TutorAccess));
 
+$router->addRoute('GET', '/uploads', 'controllers/uploads/index.php', (new StudentAccess));
+$router->addRoute('POST', '/uploads', 'controllers/uploads/upload.php', (new TutorAccess));
+$router->addRoute('PATCH', '/uploads', 'controllers/uploads/update.php', (new TutorAccess));
+$router->addRoute('DELETE', '/uploads', 'controllers/uploads/destroy.php', (new TutorAccess));
 
 $router->addRoute('GET', '/login', 'controllers/accounts/login.php');
 $router->addRoute('GET', '/logout', 'controllers/accounts/logout.php');

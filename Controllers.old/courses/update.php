@@ -1,6 +1,5 @@
 <?php
 
-use Core\Database\Models\AccountModel;
 use Core\Database\Models\CourseModel;
 use Core\Session;
 use Core\Validator;
@@ -15,12 +14,12 @@ if(!Validator::validateString($course_name)) {
 }
 if(!empty($errors)) {
     // failed validation
-    Session::flash('course_creation_errors', $errors);
+    Session::flash('course_edit_errors', $errors);
     redirect("course/edit");
 }
 
 if (!(new CourseModel)->updateCourse($course_id, $course_name, $course_description)){
-    Session::flash('course_creation_errors', ['name' => 'Course name must be unique']);
+    Session::flash('course_edit_errors', ['name' => 'Course name must be unique']);
     redirect("course/edit");
 }
 

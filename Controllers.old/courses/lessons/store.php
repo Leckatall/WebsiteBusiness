@@ -1,20 +1,17 @@
 <?php
 
-use Core\App;
-use Core\Database\Database;
 use Core\Database\Models\CourseModel;
 use Core\Database\Models\LessonModel;
 use Core\Session;
 use Core\Validator;
 
-$db = App::run(Database::class);
 
 $errors = [];
 
 $title = $_POST['title'];
 $description = $_POST['description'];
 $courseId = $_POST['courseId'];
-$setDate = $_POST['set_date'];
+$setDate = $_POST['set_date'] ?? date('Y-m-d');
 $dueDate = $_POST['due_date'] ?? null;
 $userId = $_SESSION['userId'];
 $courseId = $_REQUEST['courseId'];
@@ -34,7 +31,7 @@ if (!(new CourseModel)->getById($courseId)) {
 
 if (!empty($errors)) {
     // failed validation
-    Session::flash('lesson_create_errors', $errors);
+    Session::flash('lesson_errors', $errors);
     redirect('/lessons/create');
 }
 
@@ -48,10 +45,10 @@ if (!empty($errors)) {
 //    'setDate' => $setDate,
 //    'dueDate' => $dueDate
 //]);
+$lesson_model = new LessonModel;
+$lessonId = $lesson_model->addLesson($courseId, $title, $description, $setDate, $dueDate);
 
-$lessonId = (new LessonModel)->addLesson($courseId, $title, $description, $setDate, $dueDate);
-
-$uploadDir = base_path("public/uploads/lessons/lesson{$lessonId}/");
+$uploadDir = base_path("uploads/lessons/lesson{$lessonId}/");
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0775, true); // 0775 gives write permissions to owner and group
 }
@@ -62,11 +59,7 @@ foreach ($_FILES['files']['tmp_name'] as $key => $tmpName) {
 
     if (move_uploaded_file($tmpName, $filePath)) {
         // Save file details to the database
-        $stmt = $db->query("INSERT INTO Lesson_files (LessonId, FilePath) 
-                            VALUES (:lesson_id, :file_path)", [
-            ':lesson_id' => $lessonId,
-            ':file_path' => $filePath
-        ]);
+        $lesson_model->addFile($lessonId, $filePath);
     }else{
         dd($filePath);
     }

@@ -21,9 +21,9 @@ class LessonModel extends Model
         $this->query('CREATE TABLE IF NOT EXISTS Lesson_files (
                             id INT PRIMARY KEY AUTO_INCREMENT,
                             lessonId INT NOT NULL,
-                            file_name VARCHAR(255) NOT NULL,
-                            file_path VARCHAR(255) NOT NULL,
-                            FOREIGN KEY (lessonId) REFERENCES Lessons(id) ON DELETE CASCADE
+                            fileId INT NOT NULL,
+                            FOREIGN KEY (lessonId) REFERENCES Lessons(id) ON DELETE CASCADE,
+                            FOREIGN KEY (fileId) REFERENCES Files(id) ON DELETE CASCADE
                         );');
         // For storing student progress
         $this->query('CREATE TABLE IF NOT EXISTS Lesson_users (
@@ -33,7 +33,6 @@ class LessonModel extends Model
                             file_path VARCHAR(255) NOT NULL,
                             FOREIGN KEY (lessonId) REFERENCES Lessons(id) ON DELETE CASCADE
                         );');
-
     }
 
     public function getAllForCourse(int $courseId)
@@ -54,7 +53,7 @@ class LessonModel extends Model
         return $this->lastInsertId();
     }
 
-    public function addFiles(int $lessonId, string $fileName, string $filePath): int
+    public function addFile(int $lessonId, string $fileName, string $filePath): int
     {
         $this->query('INSERT INTO LessonFiles(LessonId, FileName, FilePath) VALUES(:lessonId, :fileName, :filePath)',
             [

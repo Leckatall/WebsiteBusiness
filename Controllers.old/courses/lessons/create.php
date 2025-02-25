@@ -5,8 +5,8 @@ use Core\Session;
 
 $courses = (new CourseModel)->getAll();
 
-load_view('courses/lessons/create.view.php', [
+load_view('courses/lessons/update.view.php', [
     'heading' => 'Add a Lesson',
     'courses' => $courses,
-    'errors' => Session::get('lesson_create_errors')
+    'errors' => Session::get('lesson_errors')
 ]);
