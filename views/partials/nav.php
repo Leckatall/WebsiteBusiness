@@ -7,20 +7,14 @@ function navbar_link($title, $page)
 
 ?>
 
-<header class="mb-auto">
-    <div class="image-container">
-        <img class="float-md-start" alt="chilling" src=<?= get_image_src("HangingOutWithController.jpg") ?>>
-    </div>
-    <nav class="navbar navbar-expand-sm">
-        <div class="container-fluid">
-            <ul class="navbar-nav">
+<header class="mb-auto">    
+    <nav class="navbar navbar-expand-sm ms-auto w-30">
+        <div class="container-fluid fs-6">
+            <ul class="navbar-nav d-flex gap-2">
                 <li class="nav-item"><?= navbar_link("Home", "/") ?></li>
                 <li class="nav-item"><?= navbar_link("About", "/aboutUs") ?></li>
                 <?php load_partial('nav-portal-selector.php') ?>
                 <li class="nav-item"><?= navbar_link("Courses", "/courses") ?></li>
-                <li>
-                    <button onclick="document.getElementById('login_widget').style.display='block'">LoginM8</button>
-                </li>
             </ul>
         </div>
     </nav>

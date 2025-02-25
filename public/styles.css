@@ -1,20 +1,219 @@
+body {
+    background-color: rgba(64, 78, 237, 0.9);
+    margin: 0;
+    padding: 0;
+}
 
-.heading .sub-title{
+.heading{
+    background: none;
+    width: 100%;
+    height: max-content;
+    background-image: url("src/images/Stars.jpg");
+    background-repeat: repeat;
+    background-size: contain;
+    /*USE minmax(min max) to stop your elements from scaling infinitely */
+    margin: 0 auto;
+    justify-items: center;
+    align-items: center;
+
+}
+.heading .title {
+    color: white;
+    text-align: center;
+    font-family: Verdana, Helvetica, serif;
+
+}
+
+/* .heading .sub-title{
     background-image: url("src/images/Stars.jpg");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     justify-self: stretch;
+} */
+.heading .sub-title{
+    color: white;
+    text-align: center;
+    /* background-image: url("src/images/Stars.jpg"); */
+    background-repeat: no-repeat;
+    background-size: 40%;
+    background-position: center;
+    justify-self: stretch;
+}
+
+/*.navigation{*/
+/*    background-image: url("images/HangingOutWithController.jpg");*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 40%;*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(3, 1fr);*/
+/*    justify-content: right;*/
+
+/*    width: 100%;*/
+
+/*}*/
+nav ul li:last-child {
+    margin-right: 20px;
+    margin-top: 0;
+}
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pitch{
+    margin: 10px 0px;
+    background-color: #000000;
+    width: 100%;
+    height: max-content;
+    border-top: 0px solid black;
+    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-rows: 30% 30% 40%;
+    opacity: 0;
+
+}
+@keyframes reveal {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.pitch{
+    animation: reveal 1s forwards;
+}
+
+
+.pitch-LTR{
+    background-color: #212529;
+    grid-template-columns: 1fr 200px;
+    grid-template-areas:
+            "image title"
+            "image subtitle"
+            "image blank";
+}
+
+.pitch-RTL{
+    background-color: #5e00ff;
+    grid-template-columns: 200px 1fr;
+    grid-template-areas:
+            "title image"
+            "subtitle image"
+            "blank image";
+}
+
+.pitch img{
+    width: 100%;
+    grid-area: image;
+}
+
+.pitch .title{
+    grid-area: title;
+}
+
+.pitch .sub-title{
+    grid-area: subtitle;
 }
 
 
 
+/*.pitch-LTR img{*/
+/*    align-self: end;*/
+/*    grid-column-start: 1;*/
+/*}*/
+
+/*.pitch-LTR .titles{*/
+/*    justify-self: right;*/
+/*    grid-column-start: 2;*/
+/*}*/
+
+/*.pitch-RTL img{*/
+/*    justify-self: right;*/
+/*    grid-column-start: 2;*/
+/*}*/
+
+/*.pitch-RTL .titles{*/
+/*    justify-self: left;*/
+/*    grid-column-start: 1;*/
+/*}*/
 
 
+.navbar ul {
+    vertical-align: top;
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    text-align: center;
+    justify-content: space-evenly;
+    justify-items: stretch;
+}
 
+.navbar ul li {
+    padding: 1px;
+}
 
+.navbar {
+    background-color: rgba(204, 204, 204, 0.5);
+    overflow: hidden;
+    width: max-content;
+    height: 75px;
+    margin-right: 0;
+    display:flex;
+    justify-content: space-between;
+    align-content: center;
+    border-radius: 0 0 0 20px;
+}
 
+.navbar img{
+    height: 100%;
+}
 
+/* Style the links inside the navigation bar */
+.navbar a {
+    text-decoration: none;
+    padding: 5px 15px; /* Add padding around text */
+    float: none;
+    color: black;
+    text-align: center;
+    vertical-align: top;
+    font-size: 27px;
+    background-color: transparent;
+    margin: 0;
+}
+.navlink.active {
+    color: rgb(255, 255, 255);
+}
 
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
 
+}
 
+/* Style the links inside the navigation bar on hover */
+.navbar a:hover {
+    animation: spin 1s linear infinite;
+    color: blueviolet;
+    border-radius: 20px;
+    background-color: rgb(65, 231, 231);
+    background-size: contain;
+    transition: background-color 0.5s linear;
+}
+
+/* Style of Team members */
+.team-members ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.member-definition {
+    color: black;
+    font-family: "", Serif;
+    font-size: 20px;
+    font-weight: normal;
+    /*font-style: */
+    font-style: normal;
+    /*options: undeline, overline, line-through, none*/
+    text-decoration: none;
+
+}
