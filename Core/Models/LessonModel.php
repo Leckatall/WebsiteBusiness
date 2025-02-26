@@ -13,7 +13,7 @@ class LessonModel extends Model
                             id INT PRIMARY KEY AUTO_INCREMENT,
                             courseId INT NOT NULL,
                             title VARCHAR(255) NOT NULL,
-                            description TEXT,
+                            description TEXT NOT NULL,
                             set_date DATE NOT NULL,
                             due_date DATE,
                             FOREIGN KEY (courseId) REFERENCES Courses(id) ON DELETE CASCADE
@@ -35,20 +35,25 @@ class LessonModel extends Model
                         );');
     }
 
+    public function getCourseIdByLessonId(int $lessonId)
+    {
+        return $this->query('SELECT courseId FROM Lessons WHERE id = :id', ['id' => $lessonId])->fetch()['course_id'];
+    }
+
     public function getAllForCourse(int $courseId)
     {
-        return $this->query("SELECT * FROM Lessons WHERE courseId = ?", [$courseId]);
+        return $this->query("SELECT * FROM Lessons WHERE courseId = ?", [$courseId])->fetchAll();
     }
 
     public function addLesson(int $courseId, string $title, string $description, $setDate, $dueDate): int
     {
-        $this->query('INSERT INTO LESSONS(Id, Title, Description, SetDate, DueDate) 
-                            VALUES(:lessonId, :userId, :title, :description, :setDate, :dueDate)', [
-            'courseId' => $courseId,
-            'title' => $title,
-            'description' => $description,
-            'setDate' => $setDate,
-            'dueDate' => $dueDate
+        $this->query('INSERT INTO LESSONS(courseId, title, description, set_date, due_date) 
+                            VALUES(:CourseId, :Title, :Description, :SetDate, :DueDate)', [
+            'CourseId' => $courseId,
+            'Title' => $title,
+            'Description' => $description,
+            'SetDate' => $setDate,
+            'DueDate' => $dueDate
         ]);
         return $this->lastInsertId();
     }

@@ -16,33 +16,35 @@ class LessonController extends BaseController
 
     public function show(int $id)
     {
+        $courseId = (new LessonModel)->getCourseIdByLessonId($id);
+        $course = (new CourseModel)->getById($courseId);
 
+        load_view('courses/lessons/show.view.php', [
+            'lessonId'=>$id,
+            'course'=>$course,
+        ]);
+    }
+
+    public function getLessonsForCourse(int $id)
+    {
+        header('Content-type: application/json');
+        echo json_encode(["data"=>(new LessonModel)->getAllForCourse($id)]);
     }
 
     public function create(): void
     {
-        $courses = (new CourseModel)->getAll();
+        $courses = (new CourseModel)->getCoursesWithUser(Session::getId());
 
         load_view('courses/lessons/update.view.php', [
             'heading' => 'Add a Lesson',
             'courses' => $courses,
             'errors' => Session::get('lesson_errors')
         ]);
-
     }
 
-    public function store(): void
+    public function isValidLesson($title, $description, $courseId): bool
     {
         $errors = [];
-
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $courseId = $_POST['courseId'];
-        $setDate = $_POST['set_date'] ?? date('Y-m-d');
-        $dueDate = $_POST['due_date'] ?? null;
-        $userId = $_SESSION['userId'];
-        $courseId = $_REQUEST['courseId'];
-
         // Validate Title
         if (!Validator::validateString($title, 1, 64)) {
             $errors["title"] = "A title of less than 64 characters is required";
@@ -55,10 +57,23 @@ class LessonController extends BaseController
         if (!(new CourseModel)->getById($courseId)) {
             $errors["courseId"] = "CourseId does not exist";
         }
-
-        if (!empty($errors)) {
-            // failed validation
+        if(!empty($errors)) {
             Session::flash('lesson_errors', $errors);
+            return false;
+        }
+        return true;
+    }
+
+    public function store(): void
+    {
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $courseId = $_REQUEST['courseId'];
+        $setDate = $_POST['set_date'] ?? date('Y-m-d');
+        $dueDate = $_POST['due_date'] ?? null;
+
+        if (!$this->isValidLesson($title, $description, $courseId)) {
+            // failed validation
             redirect('/lessons/create');
         }
 
@@ -76,19 +91,19 @@ class LessonController extends BaseController
 
             if (move_uploaded_file($tmpName, $filePath)) {
                 // Save file details to the database
-                $lesson_model->addFile($lessonId, $filePath);
+                $lesson_model->addFile($lessonId, $fileName, $filePath);
             } else {
                 dd($filePath);
             }
         }
 
-        redirect("/course?id={$courseId}");
+        redirect("/courses/{$courseId}");
     }
 
     public function edit(int $id): void
     {
-        $lesson = (new LessonModel)->getById($_GET['id']);
-        $courses = (new CourseModel)->getAll();
+        $lesson = (new LessonModel)->getById($id);
+        $courses = (new CourseModel)->getCoursesWithUser(Session::getId());
 
         load_view('courses/lessons/update.view.php', [
             'heading' => 'Edit Lesson',
@@ -108,25 +123,11 @@ class LessonController extends BaseController
         $userId = $_SESSION['userId'];
         $courseId = $_REQUEST['courseId'];
 
-        $errors = [];
-        // Validate Title
-        if (!Validator::validateString($title, 1, 64)) {
-            $errors["title"] = "A title of less than 64 characters is required";
-        }
-        // Validate Description
-        if (!Validator::validateString($description, 1, 1000)) {
-            $errors["description"] = "A description of less than 1000 characters is required";
-        }
-        // Ensure CourseId exists
-        if (!(new CourseModel)->getById($courseId)) {
-            $errors["courseId"] = "CourseId does not exist";
-        }
-
-        if (!empty($errors)) {
+        if (!$this->isValidLesson($title, $description, $courseId)) {
             // failed validation
-            Session::flash('lesson_errors', $errors);
             redirect('/lesson/edit');
         }
+        //TODO
 
     }
 

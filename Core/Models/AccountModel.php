@@ -51,29 +51,27 @@ class AccountModel extends Model
         return $account;
     }
 
-    public function getAccountsByLevel($privilege_level, $approved = true)
+    public function getAccountsByLevel($privilege_level)
     {
-        return $this->query('SELECT id, email FROM Accounts WHERE
-                                  approved = :Approved AND 
-                                  privilege_level = :Privilege_level;', [
-            'Approved' => $approved,
+        return $this->query('SELECT id, email, approved, privilege_level FROM Accounts
+                                   WHERE privilege_level = :Privilege_level;', [
             'Privilege_level' => $privilege_level
         ])->fetchAll();
     }
 
-    public function getStudents($approved = true)
+    public function getStudents()
     {
-        return $this->getAccountsByLevel(1, $approved);
+        return $this->getAccountsByLevel(1);
     }
 
-    public function getTeachers($approved = true)
+    public function getTeachers()
     {
-        return $this->getAccountsByLevel(2, $approved);
+        return $this->getAccountsByLevel(2);
     }
 
-    public function getAdmins($approved = true)
+    public function getAdmins()
     {
-        return $this->getAccountsByLevel(3, $approved);
+        return $this->getAccountsByLevel(3);
     }
 
     /**

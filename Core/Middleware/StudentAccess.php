@@ -2,10 +2,12 @@
 
 namespace Core\Middleware;
 
+use Core\Session;
+
 class StudentAccess implements Authoriser
 {
-    public static function authorise(?int $id): bool
+    public function authorise(?int $id): bool
     {
-        return ($_SESSION['user']['privilege_level'] ?? 0) >= 1;
+        return Session::getRole() >= 1;
     }
 }

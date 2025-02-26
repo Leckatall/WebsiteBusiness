@@ -12,14 +12,20 @@ class AccountController extends BaseController
     {
         $accounts = (new AccountModel)->getAll();
         load_view('accounts/index.view.php',
-            ['heading' => 'Courses',
+            ['heading' => 'Accounts',
                 'accounts' => $accounts]);
     }
 
     public function getIndex()
     {
         header('Content-Type: application/json');
-        $accounts = (new AccountModel)->getAll();
+        // Only Tutors and Admins can access this method
+        if (Session::getRole() == 3) {
+            $accounts = (new AccountModel)->getAll();
+        } else {
+            $accounts = (new AccountModel)->getStudents();
+        }
+
         if (!$accounts) {
             echo json_encode(["data" => [], "error" => "No courses found"]);
         } else {
@@ -98,12 +104,13 @@ class AccountController extends BaseController
         {
             return (new AccountModel)->approveAccount($account_id, $_SESSION['user']['id']);
         }
+
         $data = json_decode(file_get_contents("php://input"), true);
         $action = $data['action'] ?? '';
         if ($action == 'approve') {
-            if(approve($id)){
+            if (approve($id)) {
                 echo json_encode(["success" => true]);
-            }else{
+            } else {
                 echo json_encode(["error" => "failed to approve account"]);
                 $this->abort(500);
             }

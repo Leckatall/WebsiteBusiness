@@ -16,6 +16,16 @@
     </div>
 </main>
 <script>
+    function getBtn(id, type){
+        switch(type){
+            case 'approve':
+                return `<button class="btn btn-success btn-sm approve-btn" data-id="${id}">Approve</button>`;
+            case 'delete':
+                return `<button class="btn btn-danger btn-sm delete-btn" data-id="${id}">Delete</button>`;
+            case 'view':
+                return `<a class="btn btn-primary btn-sm" href="/accounts/${id}">View Account</button>`;
+        }
+    }
     function update_table() {
         $('#users-table').DataTable({
             ajax: "http://localhost/api/accounts", // Calls the userCourses() method
@@ -27,13 +37,13 @@
                 },
                 {data: "approved", render: (data) => `<p>${!!data}</p>`},
                 {
-                    data: null, render: (data, type, row) => `
-                    <button class="btn btn-primary btn-sm approve-btn" data-id="${row.id}">Approve</button>
-                    <button class="btn btn-danger btn-sm delete-btn" data-id="${row.id}">Delete</button>
-                    `
-                }
+                    data: null,
+                    render: (data, type, row) => row.approved
+                        ? getBtn(row.id, 'view')
+                        : getBtn(row.id, 'approve') + getBtn(row.id, 'delete')
+                },
             ],
-            dom: '<"top"fi>rt<"bottom"lp><"clear">'
+            dom: '<"top"fi>rt<"bottom"lp><"clear">',
         });
     }
 

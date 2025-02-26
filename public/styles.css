@@ -207,14 +207,8 @@ nav ul li:last-child {
 }
 
 table.dataTable td.sorting_1 {
-    background-color: #007bff; /* Change to any color you prefer */
+    background-color: transparent !important;
     color: black;
 }
-
-
-
-
-
-
 
 

@@ -10,9 +10,12 @@
 use Core\Controllers\AccountController;
 use Core\Controllers\CourseController;
 use Core\Controllers\HomeController;
+use Core\Controllers\LessonController;
 use Core\Controllers\PortalController;
 use Core\Controllers\UserController;
 use Core\Middleware\AccountAccess;
+use Core\Middleware\ChainedAccess;
+use Core\Middleware\CourseAccess;
 use Core\Middleware\LoggedInAccess;
 use Core\Middleware\StudentAccess;
 use Core\Middleware\TutorAccess;
@@ -24,20 +27,21 @@ $router->addRoute('GET', '/aboutUs', [HomeController::class, 'about']);
 $router->addRoute('GET', '/courses', [CourseController::class, 'index'], (new StudentAccess));
 $router->addRoute('GET', '/api/courses', [CourseController::class, 'getIndex'], (new StudentAccess));
 $router->addRoute('GET', '/courses/create', [CourseController::class, 'create'], (new TutorAccess));
-$router->addRoute('GET', '/courses/{id}', [CourseController::class, 'show'], (new StudentAccess));
+$router->addRoute('GET', '/courses/{id}', [CourseController::class, 'show'], (new CourseAccess));
 $router->addRoute('GET', '/courses/{id}/edit', [CourseController::class, 'edit'], (new TutorAccess));
 
 $router->addRoute('POST', '/courses', [CourseController::class, 'store'], (new TutorAccess));
-$router->addRoute('DELETE', '/courses/{id}', [CourseController::class, 'destroy'], (new TutorAccess));
-$router->addRoute('PATCH', '/courses/{id}', [CourseController::class, 'update'], (new TutorAccess));
+$router->addRoute('DELETE', '/courses/{id}', [CourseController::class, 'destroy'], (new ChainedAccess((new TutorAccess), (new CourseAccess))));
+$router->addRoute('PATCH', '/courses/{id}', [CourseController::class, 'update'], (new ChainedAccess((new TutorAccess), (new CourseAccess))));
 
-$router->addRoute('GET', '/courses/{id}/users', [UserController::class, 'showUsers'], (new StudentAccess));
+$router->addRoute('GET', '/courses/{id}/users', [UserController::class, 'showUsers'], (new CourseAccess));
 $router->addRoute('GET', '/me/courses', [UserController::class, 'showMyCourses'], (new StudentAccess));
 $router->addRoute('GET', '/users/{id}/courses', [UserController::class, 'showUserCourses'], (new StudentAccess));
 $router->addRoute('GET', '/api/users/{id}/courses', [UserController::class, 'getUserCourses'], (new StudentAccess));
 $router->addRoute('POST', '/courses/{id}/users', [UserController::class, 'store'], (new StudentAccess));
 $router->addRoute('POST', '/api/courses/{id}/users', [UserController::class, 'addUserToCourse'], (new StudentAccess));
 
+$router->addRoute('GET', '/api/courses/{id}/lessons', [LessonController::class, 'getLessonsForCourse'], (new CourseAccess));
 $router->addRoute('GET', '/lessons/create', [LessonController::class, 'create'], (new TutorAccess));
 $router->addRoute('GET', '/lessons/edit', [LessonController::class, 'edit'], (new TutorAccess));
 $router->addRoute('POST', '/lessons', [LessonController::class, 'store'], (new TutorAccess));

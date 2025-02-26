@@ -56,6 +56,7 @@ class CourseModel extends Model
 
     public function getCoursesForUser(int $accountId): array
     {
+        // gets all courses with reference to the current users status in that course (applied, pending, participant)
         return $this->query("SELECT c.id AS id,
                                           c.name AS name,
                                           c.description AS description,
@@ -72,13 +73,15 @@ class CourseModel extends Model
 
     public function getCoursesWithUser(int $accountId): array
     {
+        // get courses the user is in
         return $this->query("SELECT Course_users.courseId AS id,
                                           Courses.name AS name,
                                           Course_users.score AS score, 
                                           Course_users.approved AS approved
                                    FROM Course_users
                                    INNER JOIN Courses ON Course_users.courseId = Courses.id
-                                   WHERE Course_users.accountId = :AccountId", [
+                                   WHERE Course_users.accountId = :AccountId
+                                   AND Course_users.approved = 1", [
             "AccountId" => $accountId
         ])->fetchAll();
     }
@@ -93,10 +96,10 @@ class CourseModel extends Model
         ])->fetchAll());
     }
 
-    public function courseExists(string $title): bool
+    public function courseExists(string $name): bool
     {
         return !empty($this->query("SELECT id FROM Courses WHERE title = :Title", [
-            "Title" => $title
+            "Title" => $name
         ])->fetchAll());
     }
 

@@ -26,14 +26,14 @@ class CourseController extends BaseController
 
         $courses = (new CourseModel)->getCoursesForUser(Session::getId());
         switch ($filter) {
-            case 'Enrolled':
-                $courses = array_filter($courses, fn ($course) => $course['applied'] AND $course['approved']);
+            case 'My Courses':
+                $courses = array_filter($courses, fn($course) => $course['applied'] and $course['approved']);
                 break;
             case 'Pending':
-                $courses = array_filter($courses, fn ($course) => $course['applied'] AND !$course['approved']);
+                $courses = array_filter($courses, fn($course) => $course['applied'] and !$course['approved']);
                 break;
             case 'Available':
-                $courses = array_filter($courses, fn ($course) => !$course['applied']);
+                $courses = array_filter($courses, fn($course) => !$course['applied']);
                 break;
         }
         echo json_encode(array_values($courses));
@@ -47,7 +47,7 @@ class CourseController extends BaseController
 
         //$resources = $db->query('SELECT * FROM Resources WHERE CourseId = :id', ['id' => $_GET['id']]);
         load_view('courses/show.view.php', [
-            'heading' => htmlspecialchars($course["name"]),
+            'heading' => $course["name"],
             'course' => $course,
             'isParticipant' => $isParticipant
         ]);
@@ -57,28 +57,43 @@ class CourseController extends BaseController
     {
         load_view('courses/create.view.php', [
             'heading' => 'Add a Course',
-            'errors' => Session::get('course_creation_errors')
+            'errors' => Session::get('course_errors')
         ]);
+    }
+
+    public static function isValidCourse($course_name, $course_description): bool
+    {
+        $errors = [];
+
+        if (!Validator::validateString($course_name)) {
+            $errors["name"] = "Course name is required";
+        } else if ((new CourseModel)->courseExists($course_name)) {
+            $errors["name"] = "Course name is taken";
+        }
+        if (!Validator::validateString($course_description, 0, 100000)) {
+            $errors["description"] = "Description is too long";
+        }
+        if (!empty($errors)) {
+            // failed validation
+            Session::flash('course_errors', $errors);
+            return false;
+        }
+        return true;
     }
 
     public function store(): void
     {
-        $course_name = $_POST["name"];
-        $course_description = $_POST["description"] ?? "";
-        $errors = [];
+        $course_name = htmlspecialchars($_POST["name"]);
+        $course_description = htmlspecialchars($_POST["description"]) ?? "";
 
-        if (!Validator::validateString($course_name)) {
-            $errors["name"] = "name is required";
-        }
-        if (!empty($errors)) {
+        if (!$this::isValidCourse($course_name, $course_description)) {
             // failed validation
-            Session::flash('course_creation_errors', $errors);
             redirect("courses/create");
         }
-        if (!(new CourseModel)->addCourse($course_name, $course_description, $_SESSION['user']['id'])) {
-            Session::flash('course_creation_errors', ['name' => 'Course name must be unique']);
-            redirect("course/create");
-        }
+        (new CourseModel)->addCourse(
+            $course_name,
+            $course_description,
+            Session::getId());
 
         redirect('/courses');
     }
@@ -90,30 +105,22 @@ class CourseController extends BaseController
         load_view('courses/edit.view.php', [
             'heading' => 'Edit Course',
             'course' => $course,
-            'errors' => Session::get('course_edit_errors')
+            'errors' => Session::get('course_errors')
         ]);
     }
 
     public function update(int $id): void
     {
         $course_id = $_POST["course_id"];
-        $course_name = $_POST["name"];
-        $course_description = $_POST["description"] ?? "";
-        $errors = [];
+        $course_name = htmlspecialchars($_POST["name"]);
+        $course_description = htmlspecialchars($_POST["description"]) ?? "";
 
-        if (!Validator::validateString($course_name)) {
-            $errors["name"] = "name is required";
-        }
-        if (!empty($errors)) {
+        if (!$this::isValidCourse($course_name, $course_description)) {
             // failed validation
-            Session::flash('course_edit_errors', $errors);
             redirect("course/edit");
         }
 
-        if (!(new CourseModel)->updateCourse($course_id, $course_name, $course_description)) {
-            Session::flash('course_edit_errors', ['name' => 'Course name must be unique']);
-            redirect("course/edit");
-        }
+        (new CourseModel)->updateCourse($course_id, $course_name, $course_description);
 
         redirect('/courses');
     }

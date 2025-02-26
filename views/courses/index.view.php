@@ -1,8 +1,8 @@
 <main class="m-5">
     <label for="selectCourse" hidden>View</label>
-    <select id="selectCourse" class="form-select-sm">
+    <select id="selectCourse" class="form-select">
         <option>All</option>
-        <option>Enrolled</option>
+        <option>My Courses</option>
         <option>Pending</option>
         <option>Available</option>
     </select>

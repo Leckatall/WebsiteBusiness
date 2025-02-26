@@ -3,5 +3,5 @@ namespace Core\Middleware;
 
 interface Authoriser
 {
-    static public function authorise(?int $id): bool;
+    public function authorise(?int $id): bool;
 }

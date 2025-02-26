@@ -39,7 +39,7 @@ class UserController extends BaseController
 
     public function getMyCourses()
     {
-        $this->getUserCourses(Session::getId());
+        $this->getCourses(Session::getId());
     }
 
     public function showUserCourses(int $userId): void
