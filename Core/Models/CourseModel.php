@@ -11,8 +11,10 @@ class CourseModel extends Model
         // TODO: Refactor to follow this structure
         $this->query("CREATE TABLE IF NOT EXISTS Courses (
                         id INT PRIMARY KEY AUTO_INCREMENT,
+                        imgId INT DEFAULT NULL,
                         name VARCHAR(255) UNIQUE NOT NULL,
                         description TEXT
+                        FOREIGN KEY (imgId) REFERENCES Files(id)
                     );");
         //Score?
         // Unsure about potentially using a composite primary key of userId and courseId
@@ -53,6 +55,22 @@ class CourseModel extends Model
     }
 
     public function getCoursesForUser(int $accountId): array
+    {
+        return $this->query("SELECT c.id AS id,
+                                          c.name AS name,
+                                          c.description AS description,
+                                          cu.approved AS approved,
+                                          CASE
+                                            WHEN cu.accountId IS NULL THEN FALSE
+                                            ELSE TRUE
+                                          END AS applied
+                                   FROM Courses c
+                                   LEFT JOIN Course_users cu ON c.id = cu.courseId AND cu.accountId = :AccountId", [
+            "AccountId" => $accountId
+        ])->fetchAll();
+    }
+
+    public function getCoursesWithUser(int $accountId): array
     {
         return $this->query("SELECT Course_users.courseId AS id,
                                           Courses.name AS name,
@@ -119,12 +137,12 @@ class CourseModel extends Model
         ]);
     }
 
-    public function addUserToCourse(int $userId, int $courseId): int
+    public function addUserToCourse(int $accountId, int $courseId): int
     {
-        $this->query("INSERT INTO Course_users (courseId, userId) VALUES
-                                                     (:courseId, :userId)", [
-            'courseId' => $courseId,
-            'userId' => $userId
+        $this->query("INSERT INTO Course_users (courseId, accountId) VALUES
+                                                     (:CourseId, :AccountId)", [
+            'CourseId' => $courseId,
+            'AccountId' => $accountId
         ]);
         return $this->lastInsertId();
     }

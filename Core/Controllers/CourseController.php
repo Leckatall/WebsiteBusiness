@@ -19,19 +19,36 @@ class CourseController extends BaseController
             'courses' => $courses]);
     }
 
+    public function getIndex(): void
+    {
+        header('Content-Type: application/json');
+        $filter = $_GET['filter'] ?? null;
+
+        $courses = (new CourseModel)->getCoursesForUser(Session::getId());
+        switch ($filter) {
+            case 'Enrolled':
+                $courses = array_filter($courses, fn ($course) => $course['applied'] AND $course['approved']);
+                break;
+            case 'Pending':
+                $courses = array_filter($courses, fn ($course) => $course['applied'] AND !$course['approved']);
+                break;
+            case 'Available':
+                $courses = array_filter($courses, fn ($course) => !$course['applied']);
+                break;
+        }
+        echo json_encode(array_values($courses));
+    }
+
     public function show(int $id): void
     {
         $course_model = new CourseModel;
         $course = $course_model->getById($id);
-        $isParticipant = $course_model->isUserInCourse($_SESSION['user']['id'], $id);
-
-        $lessons = (new LessonModel)->getAllForCourse($id);
+        $isParticipant = $course_model->isUserInCourse(Session::getId(), $id);
 
         //$resources = $db->query('SELECT * FROM Resources WHERE CourseId = :id', ['id' => $_GET['id']]);
         load_view('courses/show.view.php', [
             'heading' => htmlspecialchars($course["name"]),
             'course' => $course,
-            'lessons' => $lessons,
             'isParticipant' => $isParticipant
         ]);
     }

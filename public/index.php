@@ -39,7 +39,7 @@ Session::clearFlash();
 // TODONE: Authorise accounts interface
 // TODO: Students can access files in courses
 // TODO:90% Students can apply to enroll in a course and be approved by the tutor
-// TODO:70% Students can only view courses they are enrolled in
+// TODO:70% Students can only view course pages of courses they are enrolled in
 // TODO: text files can be turned into quizzes
 // TODO:90% __init__ SQL Tables
 // TODO:70% Time restricted downloads for the students

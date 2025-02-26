@@ -22,6 +22,7 @@ $router->addRoute('GET', '/', [HomeController::class, 'index']);
 $router->addRoute('GET', '/aboutUs', [HomeController::class, 'about']);
 
 $router->addRoute('GET', '/courses', [CourseController::class, 'index'], (new StudentAccess));
+$router->addRoute('GET', '/api/courses', [CourseController::class, 'getIndex'], (new StudentAccess));
 $router->addRoute('GET', '/courses/create', [CourseController::class, 'create'], (new TutorAccess));
 $router->addRoute('GET', '/courses/{id}', [CourseController::class, 'show'], (new StudentAccess));
 $router->addRoute('GET', '/courses/{id}/edit', [CourseController::class, 'edit'], (new TutorAccess));
@@ -35,6 +36,7 @@ $router->addRoute('GET', '/me/courses', [UserController::class, 'showMyCourses']
 $router->addRoute('GET', '/users/{id}/courses', [UserController::class, 'showUserCourses'], (new StudentAccess));
 $router->addRoute('GET', '/api/users/{id}/courses', [UserController::class, 'getUserCourses'], (new StudentAccess));
 $router->addRoute('POST', '/courses/{id}/users', [UserController::class, 'store'], (new StudentAccess));
+$router->addRoute('POST', '/api/courses/{id}/users', [UserController::class, 'addUserToCourse'], (new StudentAccess));
 
 $router->addRoute('GET', '/lessons/create', [LessonController::class, 'create'], (new TutorAccess));
 $router->addRoute('GET', '/lessons/edit', [LessonController::class, 'edit'], (new TutorAccess));

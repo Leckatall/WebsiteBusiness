@@ -29,7 +29,7 @@ class UserController extends BaseController
     public function getUserCourses(int $userId)
     {
         header('Content-Type: application/json');
-        $courses = (new CourseModel)->getCoursesForUser($userId);
+        $courses = (new CourseModel)->getCoursesWithUser($userId);
         if (!$courses) {
             echo json_encode(["data"=>[], "error" => "No courses found"]);
         } else {
@@ -55,13 +55,10 @@ class UserController extends BaseController
         $this->showUserCourses(Session::getId());
     }
 
-    public function addUserToCourse(int $course_id)
+    public function addUserToCourse(int $courseId)
     {
-        $userId = $_SESSION['user']['id'];
-        $courseId = $_POST['course_id'];
-        (new CourseModel)->addUserToCourse($userId, $courseId);
+        (new CourseModel)->addUserToCourse(Session::getId(), $courseId);
 
-        redirect('/courses');
     }
 
 

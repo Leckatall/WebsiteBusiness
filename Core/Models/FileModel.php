@@ -40,4 +40,5 @@ class FileModel extends Model
             return $fileId;
         }
         return -1;
+    }
 }
