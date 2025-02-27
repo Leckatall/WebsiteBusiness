@@ -24,12 +24,11 @@ class FileAccess implements Authoriser
         if($file_lesson){
             if((new LessonAccess)->authorise(Session::getId())){
                 if(Session::getRole() == 1){
-                    return $file_model->isFileExpired($id);
+                    return !$file_model->isFileExpired($id);
                 }
                 return true;
             }
         }
-
         return false;
     }
 }
