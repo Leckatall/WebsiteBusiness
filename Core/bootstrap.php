@@ -1,22 +1,12 @@
 <?php
 
-use Core\App;
-use Core\Container;
-use Core\Database;
-use Core\Database\AccountManager;
 
+use Core\Models\AccountModel;
+use Core\Models\CourseModel;
+use Core\Models\FileModel;
+use Core\Models\LessonModel;
 
-$container = new Container();
-
-$container->bind('Core\\Database', function (){
-    $config = require base_path('config.php');
-    return new Database($config['database']);
-});
-
-$container->bind('Core\Database\AccountManager', function (){
-    $config = require base_path('config.php');
-    return new AccountManager();
-});
-
-App::setContainer($container);
-
+(new AccountModel)->__init_table();
+(new CourseModel)->__init_table();
+(new FileModel)->__init_table();
+(new LessonModel)->__init_table();

@@ -29,6 +29,45 @@ class FileModel extends Model
         return $this->lastInsertId();
     }
 
+    public function getTutorLessonFiles($lessonId)
+    {
+        return $this->query('SELECT f.id AS id,
+                               f.title AS title,
+                               f.path AS path
+                        FROM Files f
+                        INNER JOIN Lesson_files lf ON f.id = lf.fileId
+                        INNER JOIN accounts a ON a.id = f.accountId
+                        WHERE lf.lessonId = :LessonId
+                        AND a.privilege_level = 2', ['LessonId' => $lessonId])->fetchAll();
+    }
+
+    public function getAllStudentLessonFiles($lessonId)
+    {
+        return $this->query('SELECT f.id AS id,
+                               f.title AS title,
+                               f.path AS path
+                        FROM Files f
+                        INNER JOIN Lesson_files lf ON f.id = lf.fileId
+                        INNER JOIN accounts a ON a.id = f.accountId
+                        WHERE lf.lessonId = :LessonId
+                        AND a.privilege_level = 1', ['LessonId' => $lessonId])->fetchAll();
+    }
+
+    public function getStudentLessonFiles($lessonId, $accountId)
+    {
+        return $this->query('SELECT f.id AS id,
+                               f.title AS title,
+                               f.path AS path
+                        FROM Files f
+                        INNER JOIN Lesson_files lf ON f.id = lf.fileId
+                        INNER JOIN accounts a ON a.id = f.accountId
+                        WHERE lf.lessonId = :LessonId
+                        AND a.id = :AccountId
+                        AND a.privilege_level = 1', [
+            'LessonId' => $lessonId,
+            'AccountId' => $accountId])->fetchAll();
+    }
+
     public function getLessonFiles($lessonId)
     {
         return $this->query('SELECT f.id AS id,
@@ -63,6 +102,30 @@ class FileModel extends Model
         return null;
     }
 
+    public function getFileLesson(int $fileId)
+    {
+        return $this->query('SELECT lf.lessonId
+                            FROM Lesson_files lf
+                            WHERE lf.fileId = :FileId', ['FileId' => $fileId])->fetchColumn();
+    }
+
+    public function isFileExpired(int $fileId): bool
+    {
+        return (bool)$this->query('SELECT 
+                            CASE 
+                                WHEN lf.fileId IS NULL THEN FALSE
+                                WHEN l.due_date >= CURRENT_DATE THEN FALSE
+                                ELSE TRUE
+                            END AS is_expired
+                            FROM Files f
+                            LEFT JOIN Lesson_files lf ON f.id = lf.fileId
+                            LEFT JOIN Lessons l ON lf.lessonId = l.id
+                            WHERE f.id = :FileId
+                            LIMIT 1;', [
+            'FileId' => $fileId
+        ])->fetchColumn();
+    }
+
     public function viewFile(int $fileId): bool
     {
         $file = $this->getFile($fileId);
@@ -94,7 +157,7 @@ class FileModel extends Model
     {
         $file = $this->getFile($id);
         if ($file) {
-            if(unlink($file['path'])){
+            if (unlink($file['path'])) {
                 return parent::deleteById($id);
             }
         }

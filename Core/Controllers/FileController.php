@@ -23,7 +23,22 @@ class FileController extends BaseController
     public function getFilesForLesson($lessonId)
     {
         header('Content-type: application/json');
-        $files = (new FileModel)->getLessonFiles($lessonId);
+        if ($_GET['student'] ?? false) {
+            if ($_GET['student'] == '*') {
+                if (Session::getRole() < 2) {
+                    echo json_encode([
+                        "success" => false,
+                        "files" => []]);
+                    $this->abort(401);
+                }
+                $files = (new FileModel)->getAllStudentLessonFiles($lessonId);
+            } elseif ($_GET['student'] == 'me') {
+                $files = (new FileModel)->getStudentLessonFiles($lessonId, Session::getId());
+            }
+        } else {
+            $files = (new FileModel)->getTutorLessonFiles($lessonId);
+        }
+
         if ($files) {
             foreach ($files as &$file) {
                 $file['name'] = explode('_', basename($file['path'], 2))[1];
@@ -86,7 +101,7 @@ class FileController extends BaseController
     {
         header('Content-type: application/json');
         $action = $_REQUEST['action'] ?? 'rename';
-        if ($action == 'rename'){
+        if ($action == 'rename') {
             $title = $_REQUEST['title'];
             $response = (new FileModel)->renameFile($id, $title)
                 ? ['success' => true, 'message' => 'File renamed successfully!']
@@ -99,8 +114,8 @@ class FileController extends BaseController
     {
         header('Content-type: application/json');
         $response = (new FileModel)->deleteById($id)
-                ? ['success' => true, 'message' => 'File renamed successfully!']
-                : ['success' => false, 'message' => 'File not changed'];
+            ? ['success' => true, 'message' => 'File renamed successfully!']
+            : ['success' => false, 'message' => 'File not changed'];
         echo json_encode($response);
     }
 }

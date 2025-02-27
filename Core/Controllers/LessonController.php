@@ -17,11 +17,15 @@ class LessonController extends BaseController
     public function show(int $id)
     {
         $lesson = (new LessonModel)->getById($id);
+        $user_registered = (new LessonModel)->isUserInLesson($lesson['id'], Session::getId());
+        $lesson_user = (new LessonModel)->getLessonUser($lesson['id'], Session::getId()) ?? null;
         $course = (new CourseModel)->getById($lesson['courseId']);
 
         load_view('courses/lessons/show.view.php', [
             'heading' => $course['name'],
             'lesson' => $lesson,
+            'user_registered' => $user_registered,
+            'lesson_user' => $lesson_user,
             'course' => $course,
         ]);
     }
@@ -29,7 +33,12 @@ class LessonController extends BaseController
     public function getLessonsForCourse(int $id)
     {
         header('Content-type: application/json');
-        echo json_encode(["data" => (new LessonModel)->getAllForCourse($id)]);
+        $lessons = (new LessonModel)->getAllForCourse($id);
+        // If student accessing lessons only let them see the ones with set_date after today
+        if (Session::getRole() == 1){
+            $lessons = array_values(array_filter($lessons, fn ($lesson) => $lesson['set_date'] <= date('Y-m-d')));
+        }
+        echo json_encode(["success" => true, "lessons" => $lessons]);
     }
 
     public function create(int $courseId): void

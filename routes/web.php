@@ -45,6 +45,7 @@ $router->addRoute('GET', '/users/{id}/courses', [UserController::class, 'showUse
 $router->addRoute('GET', '/api/users/{id}/courses', [UserController::class, 'getUserCourses'], (new StudentAccess));
 $router->addRoute('POST', '/courses/{id}/users', [UserController::class, 'store'], (new StudentAccess));
 $router->addRoute('POST', '/api/courses/{id}/users', [UserController::class, 'addUserToCourse'], (new StudentAccess));
+$router->addRoute('POST', '/api/lessons/{id}/users', [UserController::class, 'addUserToLesson'], (new LessonAccess));
 
 $router->addRoute('PATCH', '/api/courses/{courseId}/users/{accountId}', [UserController::class, 'approveUserForCourse'], (new ChainedAccess((new TutorAccess), (new CourseAccess))));
 $router->addRoute('DELETE', '/api/courses/{courseId}/users/{accountId}', [UserController::class, 'removeUserFromCourse'], (new ChainedAccess((new TutorAccess), (new CourseAccess))));

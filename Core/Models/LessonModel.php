@@ -86,4 +86,36 @@ class LessonModel extends Model
             ]);
         return $this->lastInsertId();
     }
+
+    public function isUserInLesson(int $lessonId, int $accountId){
+        return !empty($this->query('SELECT * FROM Lesson_users WHERE lessonId = :LessonId AND accountId = :AccountId',
+        [
+            'LessonId' => $lessonId,
+            'AccountId' => $accountId
+        ])->fetchAll());
+    }
+
+    public function registerToLesson(int $lessonId)
+    {
+        $accountId = $_POST['account_id'];
+        if ($this->isUserInLesson($lessonId, $accountId)) {
+            return false;
+        }
+        $this->query('INSERT INTO Lesson_users(lessonId, accountId) VALUES(:LessonId, :AccountId)',
+        [
+            'LessonId' => $lessonId,
+            'AccountId' => $accountId
+        ]);
+        return $this->lastInsertId();
+    }
+
+    public function getLessonUser(int $lessonId, int $accountId)
+    {
+        return $this->query('SELECT * FROM Lesson_users WHERE lessonId = :LessonId AND accountId = :AccountId',
+        [
+            'LessonId' => $lessonId,
+            'AccountId' => $accountId
+        ])->fetch();
+    }
+
 }

@@ -8,7 +8,6 @@ class CourseModel extends Model
 
     public function __init_table(): void
     {
-        // TODO: Refactor to follow this structure
         $this->query("CREATE TABLE IF NOT EXISTS Courses (
                         id INT PRIMARY KEY AUTO_INCREMENT,
                         imgId INT DEFAULT NULL,
@@ -123,11 +122,6 @@ class CourseModel extends Model
         return $courseId;
     }
 
-    public function canEditCourse(int $courseId, int $userId): bool
-    {
-        //TODO: Only tutors who are part of the course can edit it
-        return ((new AccountModel)->getById($userId)['privilege_level'] >= 2);
-    }
 
     public function updateCourse(int $id, string $name, string $description): bool
     {

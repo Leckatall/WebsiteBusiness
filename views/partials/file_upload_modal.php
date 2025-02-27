@@ -1,4 +1,7 @@
-
+<?php $uniqueId = uniqid(); ?>
+<div class="text-end m-2">
+    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Files</a>
+</div>
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -63,10 +66,10 @@
             $("#uploadFileList").append(listItem);
         });
 
-        $(".file-title").on("input", function() {
-                let index = $(this).data("index");
-                selected_files[index].title = $(this).val();
-            });
+        $(".file-title").on("input", function () {
+            let index = $(this).data("index");
+            selected_files[index].title = $(this).val();
+        });
 
         $(".btn-remove-file").on("click", function () {
             let index = $(this).data("index");
@@ -80,7 +83,7 @@
             alert("Please select files first.");
             return;
         }
-        $.each(selected_files, function(index, fileData){
+        $.each(selected_files, function (index, fileData) {
             let formData = new FormData();
             formData.append("file", fileData.file, fileData.name);
             formData.append("title", fileData.title);
@@ -93,7 +96,8 @@
             let fileStatusEl = $("#" + fileData.id + " .status");
             fileStatusEl.text("Uploading...").removeClass("bg-secondary").addClass("bg-warning");
             uploadFile(formData).then(result => {
-                if(result){
+                if (result) {
+                    selected_files.splice(index);
                     fileStatusEl.text("Uploaded").removeClass("bg-warning").addClass("bg-success");
                     return;
                 }

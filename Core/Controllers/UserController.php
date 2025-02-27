@@ -3,6 +3,7 @@
 namespace Core\Controllers;
 
 use Core\Models\CourseModel;
+use Core\Models\LessonModel;
 use Core\Session;
 
 // Controls user(account+data) pages
@@ -70,7 +71,15 @@ class UserController extends BaseController
     public function removeUserFromCourse(int $courseId, int $userId)
     {
         header('Content-Type: application/json');
-        echo json_encode(["success" => (new CourseModel)->approveUserToCourse($courseId, $userId)]);
+        echo json_encode(["success" => (new CourseModel)->removeUserFromCourse($courseId, $userId)]);
+    }
+
+    public function addUserToLesson(int $lessonId){
+        if ((new LessonModel)->registerToLesson($lessonId, Session::getId())) {
+            echo json_encode(["success" => true]);
+        } else {
+            echo json_encode(["success" => false]);
+        }
     }
 
 
