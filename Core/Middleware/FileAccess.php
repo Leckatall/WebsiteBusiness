@@ -22,7 +22,7 @@ class FileAccess implements Authoriser
         }
         $file_lesson = $file_model->getFileLesson($id);
         if($file_lesson){
-            if((new LessonAccess)->authorise(Session::getId())){
+            if((new LessonAccess)->authorise($file_lesson)){
                 if(Session::getRole() == 1){
                     return !$file_model->isFileExpired($id);
                 }

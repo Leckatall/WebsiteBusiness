@@ -114,6 +114,7 @@ class FileModel extends Model
         return (bool)$this->query('SELECT 
                             CASE 
                                 WHEN lf.fileId IS NULL THEN FALSE
+                                WHEN (l.due_date IS NULL OR l.due_date = "0000-00-00") THEN FALSE
                                 WHEN l.due_date >= CURRENT_DATE THEN FALSE
                                 ELSE TRUE
                             END AS is_expired
