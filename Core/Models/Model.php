@@ -10,24 +10,31 @@ class Model
     // override to enable common queries
     protected string $table;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->connection = Database::getInstance()->getConnection();
     }
 
-    protected function query($query, $params = []){
+    protected function query($query, $params = [])
+    {
         $statement = $this->connection->prepare($query);
         $statement->execute($params);
 
         return $statement;
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         return $this->query("SELECT * FROM $this->table")->fetchAll();
     }
-    public function getById($id){
+
+    public function getById($id)
+    {
         return $this->query("SELECT * FROM $this->table WHERE id = ?", [$id])->fetch();
     }
-    public function getByIds(array $ids): array{
+
+    public function getByIds(array $ids): array
+    {
         $values = [];
         foreach ($ids as $id) {
             $values[] = $this->getById($id);
@@ -35,15 +42,18 @@ class Model
         return $values;
     }
 
-    public function deleteById($id){
-        return $this->query("DELETE FROM $this->table WHERE id = ?", [$id]);
+    public function deleteById($id): bool
+    {
+        return (bool)$this->query("DELETE FROM $this->table WHERE id = ?", [$id])->rowCount();
     }
 
-    public function count(){
+    public function count()
+    {
         return count($this->getAll());
     }
 
-    public function lastInsertId(): int {
+    public function lastInsertId(): int
+    {
         return $this->connection->lastInsertId();
     }
 }

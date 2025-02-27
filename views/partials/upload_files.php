@@ -6,7 +6,7 @@
 
 <h3>Upload Files</h3>
 <input type="file" id="fileInput">
-<button onclick="uploadFile()">Upload</button>
+<button onclick="">Upload</button>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

@@ -6,6 +6,7 @@ namespace Core\Models;
 class LessonModel extends Model
 {
     protected string $table = 'Lessons';
+
     public function __init_table(): void
     {
         // TODO: Refactor to follow this structure
@@ -16,6 +17,7 @@ class LessonModel extends Model
                             description TEXT NOT NULL,
                             set_date DATE NOT NULL,
                             due_date DATE,
+                            student_action INT DEFAULT 0,
                             FOREIGN KEY (courseId) REFERENCES Courses(id) ON DELETE CASCADE
                     );');
         $this->query('CREATE TABLE IF NOT EXISTS Lesson_files (
@@ -35,10 +37,6 @@ class LessonModel extends Model
                         );');
     }
 
-    public function getCourseIdByLessonId(int $lessonId)
-    {
-        return $this->query('SELECT courseId FROM Lessons WHERE id = :id', ['id' => $lessonId])->fetch()['course_id'];
-    }
 
     public function getAllForCourse(int $courseId)
     {
@@ -48,23 +46,43 @@ class LessonModel extends Model
     public function addLesson(int $courseId, string $title, string $description, $setDate, $dueDate): int
     {
         $this->query('INSERT INTO LESSONS(courseId, title, description, set_date, due_date) 
-                            VALUES(:CourseId, :Title, :Description, :SetDate, :DueDate)', [
-            'CourseId' => $courseId,
-            'Title' => $title,
-            'Description' => $description,
-            'SetDate' => $setDate,
-            'DueDate' => $dueDate
-        ]);
+                            VALUES(:CourseId, :Title, :Description, :SetDate, :DueDate)',
+            [
+                'CourseId' => $courseId,
+                'Title' => $title,
+                'Description' => $description,
+                'SetDate' => $setDate,
+                'DueDate' => $dueDate
+            ]);
         return $this->lastInsertId();
     }
 
-    public function addFile(int $lessonId, string $fileName, string $filePath): int
+    public function updateLesson(int $lessonId, int $courseId, string $title, string $description, $setDate, $dueDate, int $studentAction): bool
     {
-        $this->query('INSERT INTO LessonFiles(LessonId, FileName, FilePath) VALUES(:lessonId, :fileName, :filePath)',
+        return (bool)$this->query('UPDATE LESSONS SET courseId = :CourseId,
+                                               title = :Title,
+                                               description = :Description,
+                                               set_date = :SetDate,
+                                               due_date = :DueDate,
+                                               student_action = :StudentAction
+                            WHERE id = :LessonId',
             [
-                'lessonId' => $lessonId,
-                'fileName' => $fileName,
-                'filePath' => $filePath
+                'LessonId' => $lessonId,
+                'CourseId' => $courseId,
+                'Title' => $title,
+                'Description' => $description,
+                'SetDate' => $setDate,
+                'DueDate' => $dueDate,
+                'StudentAction' => $studentAction
+            ])->rowCount();
+    }
+
+    public function addFile(int $lessonId, int $fileId): int
+    {
+        $this->query('INSERT INTO Lesson_files(lessonId, fileId) VALUES(:LessonId, :FileId)',
+            [
+                'LessonId' => $lessonId,
+                'FileId' => $fileId
             ]);
         return $this->lastInsertId();
     }
