@@ -17,11 +17,13 @@ load_partial('file_upload_modal.php', ['action' => ['location' => 'lessons', 'id
             <p class="card-text"><?= $lesson['description'] ?></p>
             <div class="card">
                 <h3 class="card-header">Lesson Files</h3>
-                <?php load_partial('file_download_card.php', ['data_src'=> 'lessons/'.$lesson['id']]);?>
-                <div class="text-end m-2">
-                    <a class="btn btn-secondary edit-files-btn">Edit Files</a>
-                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Files</a>
-                </div>
+                <?php load_partial('file_download_card.php', ['data_src' => 'lessons/' . $lesson['id']]); ?>
+                <?php if (Session::getRole() > 1) : ?>
+                    <div class="text-end m-2">
+                        <a class="btn btn-secondary edit-files-btn">Edit Files</a>
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Files</a>
+                    </div>
+                <?php endif ?>
             </div>
         </div>
     </div>

@@ -32,13 +32,14 @@ class LessonController extends BaseController
         echo json_encode(["data" => (new LessonModel)->getAllForCourse($id)]);
     }
 
-    public function create(): void
+    public function create(int $courseId): void
     {
         $courses = (new CourseModel)->getCoursesWithUser(Session::getId());
 
         load_view('courses/lessons/update.view.php', [
             'heading' => 'Add a Lesson',
             'courses' => $courses,
+            'defaultCourseId' => $courseId,
             'errors' => Session::get('lesson_errors')
         ]);
     }

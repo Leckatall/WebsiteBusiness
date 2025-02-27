@@ -33,6 +33,7 @@ $router->addRoute('GET', '/api/courses', [CourseController::class, 'getIndex'], 
 $router->addRoute('GET', '/courses/create', [CourseController::class, 'create'], (new TutorAccess));
 $router->addRoute('GET', '/courses/{id}', [CourseController::class, 'show'], (new CourseAccess));
 $router->addRoute('GET', '/courses/{id}/edit', [CourseController::class, 'edit'], (new TutorAccess));
+$router->addRoute('GET', '/api/courses/{id}/users', [CourseController::class, 'getUsers'], (new ChainedAccess((new TutorAccess), (new CourseAccess))));
 
 $router->addRoute('POST', '/courses', [CourseController::class, 'store'], (new TutorAccess));
 $router->addRoute('DELETE', '/courses/{id}', [CourseController::class, 'destroy'], (new ChainedAccess((new TutorAccess), (new CourseAccess))));
@@ -45,8 +46,12 @@ $router->addRoute('GET', '/api/users/{id}/courses', [UserController::class, 'get
 $router->addRoute('POST', '/courses/{id}/users', [UserController::class, 'store'], (new StudentAccess));
 $router->addRoute('POST', '/api/courses/{id}/users', [UserController::class, 'addUserToCourse'], (new StudentAccess));
 
+$router->addRoute('PATCH', '/api/courses/{courseId}/users/{accountId}', [UserController::class, 'approveUserForCourse'], (new ChainedAccess((new TutorAccess), (new CourseAccess))));
+$router->addRoute('DELETE', '/api/courses/{courseId}/users/{accountId}', [UserController::class, 'removeUserFromCourse'], (new ChainedAccess((new TutorAccess), (new CourseAccess))));
+
 $router->addRoute('GET', '/api/courses/{id}/lessons', [LessonController::class, 'getLessonsForCourse'], (new CourseAccess));
 $router->addRoute('GET', '/lessons/{id}', [LessonController::class, 'show'], (new LessonAccess));
+$router->addRoute('GET', '/courses/{id}/lessons/create', [LessonController::class, 'create'], (new TutorAccess));
 $router->addRoute('GET', '/lessons/create', [LessonController::class, 'create'], (new TutorAccess));
 $router->addRoute('GET', '/lessons/{id}/edit', [LessonController::class, 'edit'], (new TutorAccess));
 $router->addRoute('POST', '/lessons', [LessonController::class, 'store'], (new TutorAccess));

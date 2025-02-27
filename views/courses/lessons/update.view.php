@@ -14,7 +14,7 @@
                                 <select class="form-select-sm w-100" name="courseId" id="courseId">
                                     <?php foreach ($courses as $course): ?>
                                         <option value=<?= $course["id"] ?>
-                                            <?= ($course["id"] == ($_REQUEST['courseId'] ?? $lesson['courseId'])) ? 'selected' : '' ?>>
+                                            <?= ($course["id"] == ($defaultCourseId ?? $lesson['courseId'])) ? 'selected' : '' ?>>
                                             <?= $course["name"] ?>
                                         </option>
                                     <?php endforeach ?>
@@ -30,10 +30,9 @@
                                 <select class="form-select-sm w-100" name="student_action" id="studentAction">
                                     <option value="0">Normal</option>
                                     <option value="1">Upload</option>
-                                    <option value="2">Quiz</option>
+                                    <option value="2">No Retakes</option>
                                 </select>
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -37,16 +37,16 @@ $router->route($uri, $method);
 Session::clearFlash();
 
 // TODONE: Authorise accounts interface
-// TODO: Students can access files in courses
-// TODO:90% Students can apply to enroll in a course and be approved by the tutor
+// TODONE: Students can access files in courses
+// TODONE: Students can apply to enroll in a course and be approved by the tutor
 // TODO:70% Students can only view course pages of courses they are enrolled in
 // TODO: text files can be turned into quizzes
-// TODO:90% __init__ SQL Tables
+// TODONE: __init__ SQL Tables
 // TODO:70% Time restricted downloads for the students
 // TODO: Quizzes can have various question types
 // TODO: Students score is saved after they complete a quiz
 // TODO: Option to prevent retaking the quiz
 // TODO: Scores are viewable by the tutor
 // TODO: Student has a progress bar indicating their knowledge of the course
-// TODO: Use of AJAX
+// TODONE: Use of AJAX
 

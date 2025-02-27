@@ -9,7 +9,6 @@ class LessonModel extends Model
 
     public function __init_table(): void
     {
-        // TODO: Refactor to follow this structure
         $this->query('CREATE TABLE IF NOT EXISTS Lessons (
                             id INT PRIMARY KEY AUTO_INCREMENT,
                             courseId INT NOT NULL,
@@ -31,9 +30,10 @@ class LessonModel extends Model
         $this->query('CREATE TABLE IF NOT EXISTS Lesson_users (
                             id INT PRIMARY KEY AUTO_INCREMENT,
                             lessonId INT NOT NULL,
-                            file_name VARCHAR(255) NOT NULL,
-                            file_path VARCHAR(255) NOT NULL,
-                            FOREIGN KEY (lessonId) REFERENCES Lessons(id) ON DELETE CASCADE
+                            accountId INT NOT NULL,
+                            score INT DEFAULT 0,
+                            FOREIGN KEY (lessonId) REFERENCES Lessons(id) ON DELETE CASCADE,
+                            FOREIGN KEY (accountId) REFERENCES Accounts(id) ON DELETE CASCADE
                         );');
     }
 

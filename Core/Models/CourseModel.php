@@ -40,7 +40,7 @@ class CourseModel extends Model
      * @param int $courseId PK from Courses
      * @return array
      */
-    public function getUsersForCourse(int $courseId): array
+    public function getUsers(int $courseId): array
     {
         return $this->query("SELECT course_users.accountId AS id,
                                           accounts.email AS email,
@@ -88,11 +88,11 @@ class CourseModel extends Model
 
     public function isUserInCourse(int $accountId, int $courseId): bool
     {
-        return (bool) count($this->query("SELECT * FROM Course_users
+        return (bool)count($this->query("SELECT * FROM Course_users
                                                 WHERE courseId = :CourseId
                                                 AND accountId = :AccountId", [
-                                                    "CourseId" => $courseId,
-                                                    "AccountId" => $accountId
+            "CourseId" => $courseId,
+            "AccountId" => $accountId
         ])->fetchAll());
     }
 
@@ -150,13 +150,22 @@ class CourseModel extends Model
         return $this->lastInsertId();
     }
 
-    public function approveUserToCourse(int $courseId, int $userId)
+    public function approveUserToCourse(int $courseId, int $userId): bool
     {
-        $this->query('UPDATE Courses SET approved = TRUE WHERE 
-                                           id = :courseId AND
-                                           userId = :userId', [
-            'courseId' => $courseId,
-            'userId' => $userId
-        ]);
+        return (bool)$this->query('UPDATE Course_users SET approved = TRUE WHERE 
+                                           courseId = :CourseId AND
+                                           accountId = :AccountId', [
+            'CourseId' => $courseId,
+            'AccountId' => $userId
+        ])->rowCount();
+    }
+
+    public function removeUserFromCourse(int $courseId, int $userId): bool
+    {
+        return (bool)$this->query('DELETE FROM Course_users WHERE courseId = :CourseId AND accountId = :AccountId',
+            [
+                'CourseId' => $courseId,
+                'AccountId' => $userId
+            ])->rowCount();
     }
 }

@@ -1,3 +1,14 @@
+<?php
+
+use Core\Session;
+
+load_partial('course_applicants_modal.php',
+    [
+        'modalActivateBtnId' => 'viewApplicantsBtn',
+        'courseId' => $course['id']
+    ]);
+?>
+
 <main class="m-5">
     <div class="card p-3">
         <div class='card p-3 mb-2'>
@@ -22,15 +33,20 @@
                     </thead>
                 </table>
             </div>
+            <?php if(Session::getRole() > 1) : ?>
             <div class="card-footer text-end">
-                <a class="btn btn-success" href="/lessons/create?courseId=<?= $course['id'] ?>">Add a Lesson</a>
+                <a class="btn btn-success" href="/courses/<?= $course['id'] ?>/lessons/create">Add a Lesson</a>
             </div>
-
+            <?php endif ?>
         </div>
+        <?php if(Session::getRole() > 1) : ?>
         <div class="row row-cols-2 p-2">
             <a class="col-1 m-2 btn btn-secondary" href="/courses/<?= $course['id'] ?>/edit">Edit Course</a>
-            <a class="col-2 m-2 btn btn-primary" href="/courses/<?= $course['id'] ?>/users">View participants</a>
+            <a class="col-2 m-2 btn btn-primary" href="/courses/<?= $course['id'] ?>/users">View Participants</a>
+            <a id="viewApplicantsBtn" class="col-2 m-2 btn btn-success" data-bs-toggle="modal"
+               data-bs-target="#applicantsModal">View Applicants</a>
         </div>
+        <?php endif ?>
 </main>
 
 <script>

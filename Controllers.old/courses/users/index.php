@@ -7,7 +7,7 @@ $course_id = $_GET['course_id'];
 
 $course_model = new CourseModel;
 $course = $course_model->getById($course_id);
-$course_users = $course_model->getUsersForCourse($course_id);
+$course_users = $course_model->getUsers($course_id);
 
 
 load_view('courses/users/index.view.php', [

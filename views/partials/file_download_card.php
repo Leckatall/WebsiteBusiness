@@ -15,7 +15,7 @@
         $('.edit-files-btn').on('click', editFilesClicked);
     });
 
-    $(document).on('file-uploaded', function (){
+    $(document).on('file-uploaded', function () {
         populateFiles().then(showFileLinks);
         $('.edit-files-btn').off().on('click', editFilesClicked);
     })
@@ -28,11 +28,22 @@
 
             listItem.append(fileTitle);
 
-            let downloadButton = $('<a>')
-                .addClass('btn btn-primary btn-sm z-2')
-                .attr('href', '/api/uploads/' + file.id)
-                .attr('download', file.name)
-                .text('Download');
+            let fileExtension = file.name.substring(file.name.lastIndexOf('.') + 1);
+            let fileButton;
+            if (fileExtension === "quiz") {
+                listItem.css('border', '2px solid purple');
+                fileButton = $('<a>')
+                    .addClass('btn z-2')
+                    .css('background-color', 'purple')
+                    .text('Take Quiz');
+            } else {
+                fileButton = $('<a>')
+                    .addClass('btn btn-primary btn-sm z-2')
+                    .attr('href', '/api/uploads/' + file.id)
+                    .attr('download', file.name)
+                    .text('Download');
+            }
+
 
             let viewLink = $('<a>')
                 .addClass('stretched-link ')
@@ -40,7 +51,7 @@
 
 
             listItem.append(viewLink);
-            listItem.append(downloadButton);
+            listItem.append(fileButton);
 
             fileListContainer.append(listItem);
         });
@@ -71,7 +82,7 @@
                 console.error('Error raised during fetch:', error);
             });
         console.log(formData.get('_method'));
-        if(formData.get('_method') == 'DELETE'){
+        if (formData.get('_method') == 'DELETE') {
             $(this).parent().remove();
         }
     }
@@ -99,7 +110,7 @@
 
             let formBtnContainer = $('<div>').attr('id', 'form-btn-container');
             formBtnContainer.append($('<button>')
-                .addClass('btn h-100 mx-2 btn-danger form-btn')
+                .addClass('btn h-100 mx-2 btn-danger form-btn btn-sm')
                 .attr('type', 'submit')
                 .text('Delete File')
             );
@@ -125,7 +136,7 @@
                 .addClass('btn-success')
                 .text('Save Changes');
             let cancelBtn = $('<button>')
-                .addClass('btn h-100 btn-secondary cancel-btn')
+                .addClass('btn btn-sm h-100 btn-secondary cancel-btn')
                 .data('id', $(this).data('id'))
                 .text('Cancel');
 

@@ -17,7 +17,7 @@ class UserController extends BaseController
     {
         $course_model = new CourseModel;
         $course = $course_model->getById($course_id);
-        $course_users = $course_model->getUsersForCourse($course_id);
+        $course_users = $course_model->getUsers($course_id);
 
 
         load_view('courses/users/index.view.php', [
@@ -59,6 +59,18 @@ class UserController extends BaseController
     {
         (new CourseModel)->addUserToCourse(Session::getId(), $courseId);
 
+    }
+
+    public function approveUserForCourse(int $courseId, int $userId)
+    {
+        header('Content-Type: application/json');
+        echo json_encode(["success" => (new CourseModel)->approveUserToCourse($courseId, $userId)]);
+    }
+
+    public function removeUserFromCourse(int $courseId, int $userId)
+    {
+        header('Content-Type: application/json');
+        echo json_encode(["success" => (new CourseModel)->approveUserToCourse($courseId, $userId)]);
     }
 
 

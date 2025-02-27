@@ -1,3 +1,3 @@
-# WebsiteBusiness
+# Academy
 
-Website for a business centered around selling website templates
+Bland, uninteresting and uninspired idea that I spent way to long implementing

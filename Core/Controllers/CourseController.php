@@ -130,6 +130,18 @@ class CourseController extends BaseController
         (new CourseModel)->deleteById($id);
     }
 
+    public function getUsers(int $course_id)
+    {
+        header('Content-Type: application/json');
+        $filter = $_GET['filter'] ?? null;
+
+        $users =(new CourseModel)->getUsers($course_id);
+        if ($filter == "applicants") {
+            $users = array_values(array_filter($users, fn($user) => !$user['approved']));
+        }
+        echo json_encode(["success"=> true, "accounts" => $users]);
+    }
+
     public function handleFormSubmission($course)
     {
 
