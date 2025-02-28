@@ -33,10 +33,10 @@ class LessonController extends BaseController
     public function getLessonsForCourse(int $id)
     {
         header('Content-type: application/json');
-        $lessons = (new LessonModel)->getAllForCourse($id);
+        $lessons = (new LessonModel)->getResultsForCourse($id, Session::getId());
         // If student accessing lessons only let them see the ones with set_date after today
-        if (Session::getRole() == 1){
-            $lessons = array_values(array_filter($lessons, fn ($lesson) => $lesson['set_date'] <= date('Y-m-d')));
+        if (Session::getRole() == 1) {
+            $lessons = array_values(array_filter($lessons, fn($lesson) => $lesson['set_date'] <= date('Y-m-d')));
         }
         echo json_encode(["success" => true, "lessons" => $lessons]);
     }
@@ -49,11 +49,12 @@ class LessonController extends BaseController
             'heading' => 'Add a Lesson',
             'courses' => $courses,
             'defaultCourseId' => $courseId,
-            'errors' => Session::get('lesson_errors')
+            'errors' => Session::get('lesson_errors'),
+            'defaults' => Session::get('lesson_defaults')
         ]);
     }
 
-    public function isValidLesson($title, $description, $courseId): bool
+    public function isValidLesson($title, $description, $courseId, $set_date, $due_date = null): bool
     {
         $errors = [];
         // Validate Title
@@ -68,6 +69,14 @@ class LessonController extends BaseController
         if (!(new CourseModel)->getById($courseId)) {
             $errors["courseId"] = "CourseId does not exist";
         }
+        if (!Validator::validateDate($set_date)) {
+            $errors["set_date"] = "Set date cannot be in the past";
+        }
+        // Validate Due Date
+        if ($due_date !== null && !Validator::validateDate($due_date, $set_date)) {
+            $errors["due_date"] = "Due date must be after set date";
+        }
+        //TODO: Validate "no lessons with the same name"
         if (!empty($errors)) {
             Session::flash('lesson_errors', $errors);
             return false;
@@ -79,19 +88,20 @@ class LessonController extends BaseController
     {
         $title = $_POST['title'];
         $description = $_POST['description'];
+        $set_date = $_POST['set_date'] ?? date('Y-m-d');
+        $due_date = $_POST['due_date'] ?? null;
+        $student_action = $_POST['student_action'] ?? 0;
         $courseId = $_REQUEST['courseId'];
-        $setDate = $_POST['set_date'] ?? date('Y-m-d');
-        $dueDate = $_POST['due_date'] ?? null;
 
-        if (!$this->isValidLesson($title, $description, $courseId)) {
+        if (!$this->isValidLesson($title, $description, $courseId, $set_date, $due_date)) {
             // failed validation
-            redirect('/lessons/create');
+            Session::flash('lesson_defaults', compact('title', 'description', 'courseId', 'set_date', 'due_date', 'student_action'));
+            redirect("/courses/$courseId/lessons/create");
         }
 
         $lesson_model = new LessonModel;
-        $lessonId = $lesson_model->addLesson($courseId, $title, $description, $setDate, $dueDate);
-
-        redirect("/courses/{$courseId}");
+        $lessonId = $lesson_model->addLesson($courseId, $title, $description, $set_date, $due_date);
+        redirect("/courses/$courseId");
     }
 
     public function edit(int $id): void
@@ -111,24 +121,26 @@ class LessonController extends BaseController
     {
         $title = $_POST['title'];
         $description = $_POST['description'];
-        $setDate = $_POST['set_date'] ?? date('Y-m-d');
-        $dueDate = $_POST['due_date'] ?? null;
-        $studentAction = $_POST['student_action'] ?? 0;
+        $set_date = $_POST['set_date'] ?? date('Y-m-d');
+        $due_date = $_POST['due_date'] ?? null;
+        $student_action = $_POST['student_action'] ?? 0;
         $courseId = $_REQUEST['courseId'];
 
-        if (!$this->isValidLesson($title, $description, $courseId)) {
+        if (!$this->isValidLesson($title, $description, $courseId, $set_date, $due_date)) {
             // failed validation
-            redirect('/lesson/edit');
+            Session::flash('lesson_defaults', compact('title', 'description', 'courseId', 'set_date', 'due_date', 'student_action'));
+            redirect("/lessons/$id/edit");
         }
 
-        if($_POST['action'] == 'update') {
-            (new LessonModel)->updateLesson($id, $courseId, $title, $description, $setDate, $dueDate, $studentAction);
+        if ($_POST['action'] == 'update') {
+            (new LessonModel)->updateLesson($id, $courseId, $title, $description, $set_date, $due_date, $student_action);
         }
         redirect("/lessons/{$id}");
     }
 
     public function destroy(int $id): void
     {
-
+        header("Content-type: application/json");
+        echo json_encode(["success" => (new LessonModel)->deleteLesson($id)]);
     }
 }

@@ -154,7 +154,7 @@ nav ul li:last-child {
     display: flex;
     justify-content: space-between;
     align-content: center;
-    border-radius: 0 0 0 20px;
+    border-radius: 0 0 20px 20px;
 }
 
 .navbar img {
@@ -178,15 +178,16 @@ nav ul li:last-child {
     color: rgb(255, 255, 255);
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+/*This worked but was terrible lol*/
+/*@keyframes spin {*/
+/*    0% {*/
+/*        transform: rotate(0deg);*/
+/*    }*/
+/*    100% {*/
+/*        transform: rotate(360deg);*/
+/*    }*/
 
-}
+/*}*/
 
 /* Style the links inside the navigation bar on hover */
 .navbar a:hover {

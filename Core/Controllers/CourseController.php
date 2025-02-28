@@ -61,13 +61,13 @@ class CourseController extends BaseController
         ]);
     }
 
-    public static function isValidCourse($course_name, $course_description): bool
+    public static function isValidCourse($course_name, $course_description, $update=false): bool
     {
         $errors = [];
 
         if (!Validator::validateString($course_name)) {
             $errors["name"] = "Course name is required";
-        } else if ((new CourseModel)->courseExists($course_name)) {
+        } else if (!$update AND (new CourseModel)->courseExists($course_name)) {
             $errors["name"] = "Course name is taken";
         }
         if (!Validator::validateString($course_description, 0, 100000)) {
@@ -111,16 +111,15 @@ class CourseController extends BaseController
 
     public function update(int $id): void
     {
-        $course_id = $_POST["course_id"];
         $course_name = htmlspecialchars($_POST["name"]);
         $course_description = htmlspecialchars($_POST["description"]) ?? "";
 
-        if (!$this::isValidCourse($course_name, $course_description)) {
+        if (!$this::isValidCourse($course_name, $course_description, true)) {
             // failed validation
-            redirect("course/edit");
+            redirect("/courses/$id/edit");
         }
 
-        (new CourseModel)->updateCourse($course_id, $course_name, $course_description);
+        (new CourseModel)->updateCourse($id, $course_name, $course_description);
 
         redirect('/courses');
     }
@@ -138,6 +137,8 @@ class CourseController extends BaseController
         $users =(new CourseModel)->getUsers($course_id);
         if ($filter == "applicants") {
             $users = array_values(array_filter($users, fn($user) => !$user['approved']));
+        } else if ($filter == "participants") {
+            $users = array_values(array_filter($users, fn($user) => $user['approved']));
         }
         echo json_encode(["success"=> true, "accounts" => $users]);
     }

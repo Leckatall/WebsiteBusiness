@@ -1,4 +1,7 @@
 <?php
+
+use Core\Session;
+
 function navbar_link($title, $page): string
 {
     $active_page = $page == $_SERVER['REQUEST_URI'] ? "active" : "";
@@ -12,14 +15,15 @@ function navbar_link($title, $page): string
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item"><?= navbar_link("Home", "/") ?></li>
-                <li class="nav-item"><?= navbar_link("About", "/aboutUs") ?></li>
                 <?php if ($_SESSION['logged_in']) : ?>
+                <li class="nav-item"><?= navbar_link("Courses", "/courses") ?></li>
+                <?php if (Session::getRole() == 2) :  // I could only be bothered to build the tutor portal lol. others not necessary?>
                     <li class="nav-item"><?= navbar_link("Portal", "/portal") ?></li>
+                <?php endif ?>
                     <li class="nav-item">
                         <?= navbar_link("Your Account",
                             "/accounts/{$_SESSION['user']['id']}") ?>
                     </li>
-                    <li class="nav-item"><?= navbar_link("Courses", "/courses") ?></li>
                 <?php else : ?>
                     <li class="nav-item"><?= navbar_link("Login", "/login") ?></li>
                 <?php endif ?>

@@ -61,7 +61,7 @@ class Router
     public function abort($status_code = 404): bool
     {
         http_response_code($status_code);
-        require base_path("views/{$status_code}.php");
+        load_view("{$status_code}.php");
         return false;
     }
 }

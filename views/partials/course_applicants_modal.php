@@ -76,9 +76,10 @@
     function approveAccount(){
         fetch(`/api/courses/<?=$courseId ?>/users/${$(this).data('id')}`, {
             method: 'PATCH'})
-            .then(response => response.json)
+            .then(response => response.json())
             .then(data => {
                 if(data.success){
+                    console.log("approved");
                     fetchApplicants();
                 }else{
                     console.log("Did not approve account");
@@ -92,9 +93,10 @@
     function rejectAccount(){
         fetch(`/api/courses/<?=$courseId ?>/users/${$(this).data('id')}`, {
             method: 'DELETE'})
-            .then(response => response.json)
+            .then(response => response.json())
             .then(data => {
                 if(data.success){
+                    console.log("rejected");
                     fetchApplicants();
                 }else{
                     console.log("Did not reject account");

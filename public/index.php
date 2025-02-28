@@ -45,6 +45,7 @@ Session::clearFlash();
 // TODO: Students score is saved after they complete a quiz
 // TODO: Option to prevent retaking the quiz
 // TODO: Scores are viewable by the tutor
+// TODO: Show students their score
 // TODO: Student has a progress bar indicating their knowledge of the course
 // TODONE: Use of AJAX
 

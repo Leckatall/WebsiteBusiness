@@ -97,8 +97,8 @@ class CourseModel extends Model
 
     public function courseExists(string $name): bool
     {
-        return !empty($this->query("SELECT id FROM Courses WHERE title = :Title", [
-            "Title" => $name
+        return !empty($this->query("SELECT id FROM Courses WHERE name = :Name", [
+            "Name" => $name
         ])->fetchAll());
     }
 
@@ -125,13 +125,13 @@ class CourseModel extends Model
 
     public function updateCourse(int $id, string $name, string $description): bool
     {
-        $this->query("UPDATE Courses SET name = :Name,
-                                               description = :Description WHERE
-                                               id = :Id", [
+        return (bool)$this->query("UPDATE Courses SET name = :Name,
+                                               description = :Description 
+                            WHERE id = :Id", [
             'Name' => $name,
             'Description' => $description,
             'Id' => $id
-        ]);
+        ])->rowCount();
     }
 
     public function addUserToCourse(int $accountId, int $courseId): int

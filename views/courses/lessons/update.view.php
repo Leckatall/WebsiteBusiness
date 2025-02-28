@@ -1,6 +1,13 @@
+<?php
+
+use Core\Session;
+
+$default = $defaults ?? $lesson ?? ['set_date' => date('Y-m-d')];
+?>
 <main>
     <div class='mx-auto max-w-7xl py-6 sm:px-6 lg:px-8'>
-        <form class="form-group card m-5 p-3" method="POST" action="/lessons<?= (isset($lesson)) ? "/{$lesson['id']}" : ''?>" enctype="multipart/form-data">
+        <form class="form-group card m-5 p-3" method="POST"
+              action="/lessons<?= (isset($lesson)) ? "/{$lesson['id']}" : '' ?>" enctype="multipart/form-data">
             <?php if (isset($lesson)) : ?>
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="action" value="update">
@@ -14,7 +21,7 @@
                                 <select class="form-select-sm w-100" name="courseId" id="courseId">
                                     <?php foreach ($courses as $course): ?>
                                         <option value=<?= $course["id"] ?>
-                                            <?= ($course["id"] == ($defaultCourseId ?? $lesson['courseId'])) ? 'selected' : '' ?>>
+                                            <?= ($course["id"] == ($default['courseId'] ?? $lesson['courseId'] ?? $defaultCourseId ?? null)) ? 'selected' : '' ?>>
                                             <?= $course["name"] ?>
                                         </option>
                                     <?php endforeach ?>
@@ -36,7 +43,6 @@
                         </div>
                     </div>
                 </div>
-                <?php $default = $lesson ?? ['set_date' => date('Y-m-d')] ?>
                 <div class="form-group mb-3">
                     <?php load_partial('handled_input.php', [
                         'id' => 'title',
@@ -44,7 +50,8 @@
                         'type' => 'text',
                         'required' => true,
                         'hide_label' => true,
-                        'default' => $default]) ?>
+                        'default' => $default,
+                        'errors' => $errors]) ?>
                     <?php load_partial('handled_input.php', [
                         'tag' => 'textarea',
                         'id' => 'description',
@@ -52,7 +59,8 @@
                         'type' => 'text',
                         'required' => true,
                         'hide_label' => true,
-                        'default' => $default]) ?>
+                        'default' => $default,
+                        'errors' => $errors]) ?>
                 </div>
                 <div class="form-group row row-cols-2 mb-2">
                     <?php load_partial('handled_input.php', [
@@ -60,14 +68,16 @@
                         'name' => 'Set Date:',
                         'type' => 'date',
                         'required' => true,
-                        'default' => $default]) ?>
+                        'default' => $default,
+                        'errors' => $errors]) ?>
 
                     <?php load_partial('handled_input.php', [
                         'id' => 'due_date',
                         'name' => 'Due Date:',
                         'type' => 'date',
                         'required' => false,
-                        'default' => $default
+                        'default' => $default,
+                        'errors' => $errors
                     ]) ?>
 
                 </div>
@@ -75,6 +85,7 @@
             <div class="mx-auto mt-3">
                 <?php if (isset($lesson)) : ?>
                     <a class="btn btn-secondary" href=".">Cancel</a>
+                    <a class="btn btn-danger delete-btn">Delete Lesson</a>
                 <?php endif ?>
 
                 <button class="btn btn-success px-5" type="submit">
@@ -84,4 +95,25 @@
         </form>
     </div>
 </main>
-
+<script>
+    $(document).ready(function () {
+        $('.delete-btn').on('click', function () {
+            fetch(".", {
+                headers: {"Content-Type": "application/json"},
+                method: "DELETE"
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("delete success")
+                        window.location.href = "/courses/<?=$lesson['courseId'] ?>";
+                    } else {
+                        console.log("delete failed")
+                    }
+                })
+                .catch(error => {
+                    console.error("Error raised during delete: ", error)
+                })
+        })
+    })
+</script>

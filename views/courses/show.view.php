@@ -21,20 +21,23 @@ load_partial('course_applicants_modal.php',
                 <h2 class="mb-0">Lesson List</h2>
             </div>
 
-            <div class="card-body bg-secondary-subtle p-3">
-                <table class="table table-striped table-bordered" id="course-lessons-table"
-                       data-src="/api/courses/<?= $course['id'] ?>/lessons">
-                    <thead class="table-secondary">
-                    <tr>
-                        <th class="w-50">Lesson Title</th>
-                        <th class="w-25">Set Date</th>
-                        <th class="w-25">Due Date</th>
-                    </tr>
-                    </thead>
-                    <tbody id="course-lessons">
+            <div class="card-body bg-secondary-subtle  p-3">
+                <div class="table-responsive rounded overflow-hidden">
+                    <table class="table table-striped table-bordered " id="course-lessons-table"
+                           data-src="/api/courses/<?= $course['id'] ?>/lessons">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th class="w-50">Lesson Title</th>
+                            <th class="">Set Date</th>
+                            <th class="">Due Date</th>
+                            <th class="">Score</th>
+                        </tr>
+                        </thead>
+                        <tbody id="course-lessons">
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <?php if (Session::getRole() > 1) : ?>
                 <div class="card-footer text-end">
@@ -75,6 +78,7 @@ load_partial('course_applicants_modal.php',
             tableRow.append(lessonTitleCell);
             tableRow.append($('<td>').append($('<p>').text(lesson.set_date)));
             tableRow.append($('<td>').append($('<p>').text(lesson.due_date)));
+            tableRow.append($('<td>').append($('<p>').text(lesson.score)));
             lessonsContainer.append(tableRow);
         });
     }

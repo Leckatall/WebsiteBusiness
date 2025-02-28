@@ -13,7 +13,7 @@ class FileModel extends Model
                             accountId INT NOT NULL,
                             title VARCHAR(255) NOT NULL,
                             path VARCHAR(255) NOT NULL,
-                            temp BOOLEAN DEFAULT FALSE,
+                            uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             FOREIGN KEY (accountId) REFERENCES Accounts(id) ON DELETE CASCADE
                     );');
     }

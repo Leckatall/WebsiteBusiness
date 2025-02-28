@@ -20,6 +20,25 @@ class FileController extends BaseController
         }
     }
 
+    public function getAccountFilesForLesson($lessonId, $accountId)
+    {
+        header('Content-type: application/json');
+        $files = (new FileModel)->getStudentLessonFiles($lessonId, $accountId);
+        if ($files) {
+            foreach ($files as &$file) {
+                $file['name'] = explode('_', basename($file['path'], 2))[1];
+                unset($file['path']);
+            }
+            echo json_encode([
+                "success" => true,
+                "files" => $files]);
+        } else {
+            echo json_encode([
+                "success" => false,
+                "files" => []]);
+        }
+    }
+
     public function getFilesForLesson($lessonId)
     {
         header('Content-type: application/json');

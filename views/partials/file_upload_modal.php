@@ -1,6 +1,6 @@
 <?php $uniqueId = uniqid(); ?>
 <div class="text-end m-2">
-    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Files</a>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Files</button>
 </div>
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
