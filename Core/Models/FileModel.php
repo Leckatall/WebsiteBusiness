@@ -6,18 +6,6 @@ class FileModel extends Model
 {
     protected string $table = 'Files';
 
-    public function __init_table(): void
-    {
-        $this->query('CREATE TABLE IF NOT EXISTS Files (
-                            id INT PRIMARY KEY AUTO_INCREMENT,
-                            accountId INT NOT NULL,
-                            title VARCHAR(255) NOT NULL,
-                            path VARCHAR(255) NOT NULL,
-                            uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                            FOREIGN KEY (accountId) REFERENCES Accounts(id) ON DELETE CASCADE
-                    );');
-    }
-
     public function addFile(int $accountId, string $title, string $path): int
     {
         $this->query('INSERT INTO Files (accountId, title, path) 

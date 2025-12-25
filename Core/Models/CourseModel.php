@@ -6,28 +6,6 @@ class CourseModel extends Model
 {
     protected string $table = 'Courses';
 
-    public function __init_table(): void
-    {
-        $this->query("CREATE TABLE IF NOT EXISTS Courses (
-                        id INT PRIMARY KEY AUTO_INCREMENT,
-                        imgId INT DEFAULT NULL,
-                        name VARCHAR(255) UNIQUE NOT NULL,
-                        description TEXT
-                        FOREIGN KEY (imgId) REFERENCES Files(id)
-                    );");
-        //Score?
-        // Unsure about potentially using a composite primary key of userId and courseId
-        $this->query("CREATE TABLE IF NOT EXISTS Course_users (
-                        id INT PRIMARY KEY AUTO_INCREMENT,
-                        accountId INT NOT NULL,
-                        courseId INT NOT NULL,
-                        score INT NOT NULL DEFAULT 0,
-                        approved BOOLEAN NOT NULL DEFAULT FALSE,
-                        FOREIGN KEY (accountId) REFERENCES Accounts(id) ON DELETE CASCADE,
-                        FOREIGN KEY (courseId) REFERENCES Courses(id) ON DELETE CASCADE
-                    );");
-    }
-
     public function getUserIdsForCourse(int $courseId): array
     {
         return $this->query("SELECT accountId FROM Course_users WHERE courseId = :CourseId", [

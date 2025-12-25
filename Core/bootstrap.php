@@ -1,13 +1,10 @@
 <?php
 
+const BASE_PATH = __DIR__ . '/../';
 
-use Core\Models\AccountModel;
-use Core\Models\CourseModel;
-use Core\Models\FileModel;
-use Core\Models\LessonModel;
+require BASE_PATH . "Core/functions.php";
 
-// UNCOMMENT TO INIT TABLES
-//(new AccountModel)->__init_table();
-//(new CourseModel)->__init_table();
-//(new FileModel)->__init_table();
-//(new LessonModel)->__init_table();
+spl_autoload_register(function ($class) {
+    $class = str_replace("\\", DIRECTORY_SEPARATOR, $class);
+    require base_path($class) . ".php";
+});

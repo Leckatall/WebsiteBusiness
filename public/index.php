@@ -3,22 +3,12 @@
 use Core\Router;
 use Core\Session;
 
-const BASE_PATH = __DIR__ . '/../';
-
-require BASE_PATH . "Core/functions.php";
+require_once '../Core/bootstrap.php';
 
 // Starts a session
 session_start();
 
-spl_autoload_register(function ($class) {
-    $class = str_replace("\\", DIRECTORY_SEPARATOR, $class);
-    require base_path($class) . ".php";
-});
-
-
 require base_path("Core/Router.php");
-
-//require base_path("Core/bootstrap.php");
 
 $router = Router::getInstance();
 require base_path("/routes/index.php");
